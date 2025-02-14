@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Director
+    public class Director : ModelBase
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

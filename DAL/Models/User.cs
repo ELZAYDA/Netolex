@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class User 
+    public class User : ModelBase
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }

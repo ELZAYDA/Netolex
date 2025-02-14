@@ -1,6 +1,8 @@
 ﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Reflection.Emit;
 
 namespace DAL.Configurations
 {
@@ -14,6 +16,13 @@ namespace DAL.Configurations
                    .WithMany(u => u.WatchLists)
                    .HasForeignKey(w => w.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Property(w => w.Status)
+                .HasConversion(new EnumToStringConverter<WatchStatus>()); 
+            //.HasConversion(
+            //v => v.ToString(),           // تحويل Enum إلى String عند الحفظ
+            //v => (WatchStatus)Enum.Parse(typeof(WatchStatus), v)  // تحويل String إلى Enum عند القراءةكنص وليس كرقم
         }
     }
 }

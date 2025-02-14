@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class WatchList
+    public class WatchList : ModelBase
     {
-        public int Id { get; set; }
+      //  public int Id { get; set; }
         public DateTime AddedAt { get; set; }
         public WatchStatus Status { get; set; }
 
