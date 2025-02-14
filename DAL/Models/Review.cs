@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Review
+    public class Review : ModelBase
     {
-        public int Id { get; set; }
+       // public int Id { get; set; }
         public int Rating { get; set; }
         public string Comment { get; set; }
         public DateTime CreatedAt { get; set; }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Movie
+    public class Movie : ModelBase
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int ReleaseYear { get; set; }

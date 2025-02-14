@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class Actor
+    public class Actor : ModelBase
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

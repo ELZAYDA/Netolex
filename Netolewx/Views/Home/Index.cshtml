@@ -1,8 +1,174 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Grid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/index.css">
+</head>
+<body>
+    <div class="container">
+        <section class="search-bar">
+            <form>
+                <input type="text" placeholder="Search for movies...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </section>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <div class="container">
+            <section class="movies">
+                <div class="movie-card" onclick="window.location.href='/movie-detail.html'">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/1/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 1</h4>
+                        <button class="watchlist-btn" onclick="addToWatchlist(1)">
+                            <i class="fas fa-plus"></i> Watchlist
+                        </button>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 3</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max,anna, ralph, dorian </h4>
+                        <h4>director 1,director 2,director 3</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-image">
+                        <img src="https://picsum.photos/id/237/200/300">
+                    </div>
+                    <div class="movie-info">
+                        <h4>Movie 2</h4>
+                        <h4>Action, Adventure</h4>
+                        <h4>John doe, max </h4>
+                        <h4>director 1</h4>
+                    </div>
+                </div>
+            </section>
+
+        <div class="pagination">
+            <a href="#"><i class="fas fa-chevron-left"></i></a>
+            <a href="#">1</a>
+            <a class="active" href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#"><i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+</body>
+</html>
