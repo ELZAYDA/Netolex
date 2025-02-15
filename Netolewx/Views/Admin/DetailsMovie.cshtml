@@ -1,0 +1,58 @@
+﻿@model DetailsEditMovieVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/Movie/DetailsMovie.css" rel="stylesheet" />
+    <title>DetailsMovie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="form-container">
+        <h2 class="text-center">🎬 Movie Details</h2>
+
+        <input type="hidden" name="id" value="@Model.id" />
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" value="@Model.Title" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="4" readonly>@Model.Description</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ReleaseYear" class="form-label">Release Year</label>
+            <input asp-for="ReleaseYear" class="form-control" type="number" value="@Model.ReleaseYear" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Duration" class="form-label">Duration (minutes)</label>
+            <input asp-for="Duration" class="form-control" type="number" value="@Model.Duration" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PosterUrl" class="form-label">Poster URL</label>
+            <input asp-for="PosterUrl" class="form-control" type="url" value="@Model.PosterUrl" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TrailerUrl" class="form-label">Trailer URL</label>
+            <input asp-for="TrailerUrl" class="form-control" type="url" value="@Model.TrailerUrl" readonly />
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/admin/MoviesManagement" class="btn btn-success">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</body>
+</html>

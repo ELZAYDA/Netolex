@@ -1,0 +1,44 @@
+﻿@model AddGenreVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddGenre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link href="~/css/Genre/AddGenre.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">🎭 Add New Genre</h2>
+
+        <div class="form-container">
+            <form asp-action="AddGenre" method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Genre Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter genre name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter genre description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i> Add Genre
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

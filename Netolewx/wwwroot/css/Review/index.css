@@ -1,0 +1,130 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+/* Add Review Button */
+.add-review-container {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.btn-add-review {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+    .btn-add-review:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .review-table thead {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+    }
+
+    .review-table th, .review-table td {
+        padding: 12px 15px;
+        text-align: left;
+    }
+
+    .review-table th {
+        font-weight: 600;
+    }
+
+    .review-table tbody tr {
+        border-bottom: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+    }
+
+        .review-table tbody tr:hover {
+            background-color: #f1f3f5;
+        }
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-details, .btn-edit, .btn-delete {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-details {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ff6b6b, #ffa5a5);
+}
+
+    .btn-details:hover, .btn-edit:hover, .btn-delete:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .btn-add-review {
+        width: 100%;
+        text-align: center;
+    }
+
+    .review-table th, .review-table td {
+        padding: 8px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

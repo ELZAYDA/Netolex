@@ -1,0 +1,68 @@
+﻿@model AddMovieVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddMovie</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link href="~/css/Movie/AddMovie.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">🎬 Add New Movie</h2>
+
+        <div class="form-container">
+            <form asp-action="AddMovie" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Enter movie title" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter movie description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ReleaseYear" class="form-label">Release Year</label>
+                    <input asp-for="ReleaseYear" class="form-control" type="number" placeholder="Enter release year" />
+                    <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Duration" class="form-label">Duration (minutes)</label>
+                    <input asp-for="Duration" class="form-control" type="number" placeholder="Enter duration" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PosterUrl" class="form-label">Poster URL</label>
+                    <input asp-for="PosterUrl" class="form-control" type="url" placeholder="Enter poster URL" />
+                    <span asp-validation-for="PosterUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="TrailerUrl" class="form-label">Trailer URL</label>
+                    <input asp-for="TrailerUrl" class="form-control" type="url" placeholder="Enter trailer URL" />
+                    <span asp-validation-for="TrailerUrl" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i> Add Movie
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

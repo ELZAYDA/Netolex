@@ -1,3 +1,5 @@
+using BLL.Repositiries.Implementation;
+using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,11 @@ builder.Services.AddDbContext<DbApplicationContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IMovieRepo, MovieRepo>();
+builder.Services.AddScoped<IGenreRepo, GenreRepo>();
+builder.Services.AddScoped<IDirectorRepo, DirectorRepo>();
+builder.Services.AddScoped<IActorRepo, ActorRepo>();
+builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
 
 
 var app = builder.Build();

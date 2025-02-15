@@ -1,0 +1,48 @@
+﻿@model DetailsEditReviewVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Review</title>
+    <link href="~/css/Review/EditReview.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="form-container">
+        <form asp-action="EditReview" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Rating" class="form-label">Rating</label>
+                <input asp-for="Rating" type="number" class="form-control" min="1" max="5" placeholder="Enter rating (1-5)" required />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Comment" class="form-label">Comment</label>
+                <textarea asp-for="Comment" class="form-control" rows="4" placeholder="Enter your comment" required></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CreatedAt" class="form-label">Created At</label>
+                <input asp-for="CreatedAt" type="text" class="form-control" readonly />
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Save
+            </button>
+
+            <a href="/admin/ReviewsManagement" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancel
+            </a>
+        </form>
+    </div>
+</body>
+</html>
