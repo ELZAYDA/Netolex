@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,8 @@ namespace BLL.Repositiries.Interfaces
 {
     public interface IMovieRepo : IGenericRepo<Movie>
     {
+        public IQueryable<Movie> GetByName(string name);
+
+        public IEnumerable<Movie> GetMoviesWithGenres();      
     }
 }

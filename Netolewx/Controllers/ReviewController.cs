@@ -1,4 +1,5 @@
-﻿using BLL.Repositiries.Interfaces;
+﻿using AutoMapper;
+using BLL.Repositiries.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.ReviewVM;
@@ -8,10 +9,12 @@ namespace Netolewx.Controllers
     public class ReviewController : Controller
     {
         private readonly IReviewRepo _reviewRepo;
+        private readonly IMapper _mapper;
 
-        public ReviewController(IReviewRepo reviewRepo)
+        public ReviewController(IReviewRepo reviewRepo,IMapper mapper)
         {
             _reviewRepo = reviewRepo;
+            _mapper=mapper;
         }
 
         public IActionResult Index()
@@ -23,29 +26,24 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddReview()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddReview(AddReviewVM entity)
+        public IActionResult Add(AddReviewVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
-                var review = new Review
-                {
-                    Rating = entity.Rating,
-                    Comment = entity.Comment,
-                    CreatedAt = DateTime.Now,
-                };
+                var review = _mapper.Map<AddReviewVM,Review>(entity);
                 _reviewRepo.Add(review);
                 return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult DetailsReview(int id, string name = "DetailsReview")
+        public IActionResult Details(int id, string name = "DetailsReview")
         {
             var entity = _reviewRepo.Get(id);
 
@@ -54,24 +52,19 @@ namespace Netolewx.Controllers
                 return NotFound();
             }
 
-            var detailsReview = new DetailsEditReviewVM
-            {
-                Id = id,
-                Rating = entity.Rating,
-                Comment = entity.Comment,
-            };
+            var detailsReview=_mapper.Map<Review,DetailsEditReviewVM>(entity);  
 
             return View(name, detailsReview);
         }
 
         [HttpGet]
-        public IActionResult EditReview(int id)
+        public IActionResult Edit(int id)
         {
-            return DetailsReview(id, "EditReview");
+            return Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult EditReview(DetailsEditReviewVM entity)
+        public IActionResult Edit(DetailsEditReviewVM entity)
         {
             if (ModelState.IsValid)
             {
@@ -82,9 +75,7 @@ namespace Netolewx.Controllers
                     return NotFound();
                 }
 
-                review.Rating = entity.Rating;
-                review.Comment = entity.Comment;
-
+                review = _mapper.Map<DetailsEditReviewVM, Review>(entity);
                 _reviewRepo.Update(review);
                 return RedirectToAction("Index");
             }
@@ -93,7 +84,7 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteReview(int id)
+        public IActionResult Delete(int id)
         {
             var review = _reviewRepo.Get(id);
 

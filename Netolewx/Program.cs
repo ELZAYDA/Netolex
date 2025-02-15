@@ -2,6 +2,7 @@ using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Netolewx.Helperz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IGenreRepo, GenreRepo>();
 builder.Services.AddScoped<IDirectorRepo, DirectorRepo>();
 builder.Services.AddScoped<IActorRepo, ActorRepo>();
 builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfilies()));
 
 
 var app = builder.Build();

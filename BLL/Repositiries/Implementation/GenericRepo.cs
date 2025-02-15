@@ -2,20 +2,18 @@
 using DAL.Contexts;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Repositiries.Implementation
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : ModelBase
     {
-        private readonly DbApplicationContext _dbcontext;
+        protected readonly DbApplicationContext _dbcontext;
 
-        public GenericRepo(DbApplicationContext dbcontext) {
-            _dbcontext=dbcontext;
+        public GenericRepo(DbApplicationContext dbcontext)
+        {
+            _dbcontext = dbcontext;
         }
 
         public int Add(T entity)
@@ -27,23 +25,34 @@ namespace BLL.Repositiries.Implementation
         public bool Delete(T entity)
         {
             _dbcontext.Set<T>().Remove(entity);
-            return _dbcontext.SaveChanges()>0;
+            return _dbcontext.SaveChanges() > 0;
         }
 
         public T Get(int id)
         {
-            return _dbcontext.Find<T>(id);
+            return _dbcontext.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(bool trackChanges = false)
         {
-            return _dbcontext.Set<T>().AsNoTracking().ToList();
+            return trackChanges
+                ? _dbcontext.Set<T>().ToList()
+                : _dbcontext.Set<T>().AsNoTracking().ToList();
         }
 
         public bool Update(T entity)
         {
-            _dbcontext.Set<T>().Update(entity);
-            return _dbcontext.SaveChanges()>0;
+            var existingEntity = _dbcontext.Set<T>().Find(entity.Id);
+            if (existingEntity != null)
+            {
+                _dbcontext.Entry(existingEntity).CurrentValues.SetValues(entity);
+            }
+            else
+            {
+                _dbcontext.Set<T>().Update(entity);
+            }
+
+            return _dbcontext.SaveChanges() > 0;
         }
     }
 }

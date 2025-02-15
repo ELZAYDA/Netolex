@@ -1,4 +1,4 @@
-﻿@model DetailsEditDirectorVM
+﻿@model DetailsEditActorVM
 @{
     Layout = null;
 }
@@ -8,13 +8,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="~/css/Director/DetailsDirectors.css" rel="stylesheet" />
-    <title>Director Details</title>
+    <link href="~/css/Actor/DetailsActors.css" rel="stylesheet" />
+    <title>Actor Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
     <div class="form-container">
-        <h2 class="text-center">🎬 Director Details</h2>
+        <h2 class="text-center">🎬 Actor Details</h2>
 
         <input type="hidden" asp-for="Id" />
 
@@ -46,7 +46,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="/admin/DirectorsManagement" class="btn btn-success">
+            <a href="/admin/Index" class="btn btn-success">
                 <i class="fas fa-arrow-left"></i> Back to List
             </a>
         </div>

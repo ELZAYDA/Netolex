@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="form-container">
-        <form asp-action="EditReview" method="post">
+        <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="Id" />
 
             <div class="mb-3">
@@ -39,7 +39,7 @@
                 <i class="fas fa-save"></i> Save
             </button>
 
-            <a href="/admin/ReviewsManagement" class="btn btn-secondary">
+            <a href="/admin/Index" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Cancel
             </a>
         </form>

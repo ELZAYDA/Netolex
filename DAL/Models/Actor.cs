@@ -15,6 +15,6 @@ namespace DAL.Models
         public string ProfilePictureUrl { get; set; }
 
         // Navigation property
-        public ICollection<MovieActor> MovieActors { get; set; }
+        public ICollection<MovieActor> MovieActors { get; set; }=new HashSet<MovieActor>();
     }
 }
