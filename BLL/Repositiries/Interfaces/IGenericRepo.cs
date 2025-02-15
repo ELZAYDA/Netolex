@@ -12,7 +12,7 @@ namespace BLL.Repositiries.Interfaces
         //add, update, delete, get
         T Get(int id);
 
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(bool trackChanges=false);
 
         int Add(T entity);
 

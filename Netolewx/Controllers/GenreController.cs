@@ -1,18 +1,22 @@
-﻿using BLL.Repositiries.Implementation;
+﻿using AutoMapper;
+using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.GenreVM;
+using Netolewx.ViewModels.MovieVM.MovieVM;
 
 namespace Netolewx.Controllers
 {
     public class GenreController : Controller
     {
         private readonly IGenreRepo _genrerepo;
+        private readonly IMapper _mapper;
 
-        public GenreController(IGenreRepo genrerepo)
+        public GenreController(IGenreRepo genrerepo,IMapper mapper)
         {
             _genrerepo = genrerepo;
+            _mapper=mapper;
         }
 
         public IActionResult Index()
@@ -25,28 +29,25 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddGenre()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddGenre(AddGenreVM entity)
+        public IActionResult Add(AddGenreVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
-                var genre = new Genre
-                {
-                    Name = entity.Name,
-                    Description = entity.Description,
-                };
+                var genre = _mapper.Map<AddGenreVM, Genre>(entity);
+
                 _genrerepo.Add(genre);
                 return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult DetailsGenre(int id,string name= "DetailsGenre")
+        public IActionResult Details(int id,string name= "Details")
         {
             var entity = _genrerepo.Get(id);
 
@@ -55,36 +56,31 @@ namespace Netolewx.Controllers
                 return NotFound();
             }
 
-            var detailsGenre = new DetailsEditGenreVM
-            {
-                id = id,
-                Name = entity.Name,
-                Description = entity.Description,
-            };
+            var detailsGenre = _mapper.Map<Genre, DetailsEditGenreVM>(entity);
+
 
             return View(name, detailsGenre);
         }
 
         [HttpGet]
-        public IActionResult EditGenre(int id)
+        public IActionResult Edit(int id)
         {
-            return DetailsGenre(id, "EditGenre");
+            return Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult EditGenre(DetailsEditGenreVM entity)
+        public IActionResult Edit(DetailsEditGenreVM entity)
         {
             if (ModelState.IsValid)
             {
-                var genre = _genrerepo.Get(entity.id);
+                var genre = _genrerepo.Get(entity.Id);
 
                 if (genre == null)
                 {
                     return NotFound();
                 }
 
-                genre.Name = entity.Name;
-                genre.Description = entity.Description;
+            genre = _mapper.Map<DetailsEditGenreVM,Genre>(entity);
 
                 _genrerepo.Update(genre);
                 return RedirectToAction("Index");
@@ -94,7 +90,7 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteGenre(int id)
+        public IActionResult Delete(int id)
         {
             var genre = _genrerepo.Get(id);
 

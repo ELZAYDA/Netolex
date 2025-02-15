@@ -1,17 +1,21 @@
-﻿using BLL.Repositiries.Interfaces;
+﻿using AutoMapper;
+using BLL.Repositiries.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.ActorVM;
+using Netolewx.ViewModels.MovieVM.MovieVM;
 
 namespace Netolewx.Controllers
 {
     public class ActorController : Controller
     {
         private readonly IActorRepo _actorRepo;
+        private readonly IMapper _mapper;
 
-        public ActorController(IActorRepo actorRepo)
+        public ActorController(IActorRepo actorRepo, IMapper mapper)
         {
             _actorRepo = actorRepo;
+            _mapper=mapper;
         }
 
         public IActionResult Index()
@@ -23,31 +27,24 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddActor()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddActor(AddActorVM entity)
+        public IActionResult Add(AddActorVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
-                var actor = new Actor
-                {
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    DateOfBirth = entity.DateOfBirth,
-                    Biography = entity.Biography,
-                    ProfilePictureUrl = entity.ProfilePictureUrl
-                };
+                var actor = _mapper.Map<AddActorVM, Actor>(entity);
                 _actorRepo.Add(actor);
                 return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult DetailsActor(int id, string name = "DetailsActor")
+        public IActionResult Details(int id, string name = "Details")
         {
             var entity = _actorRepo.Get(id);
 
@@ -56,27 +53,18 @@ namespace Netolewx.Controllers
                 return NotFound();
             }
 
-            var detailsActor = new DetailsEditActorVM
-            {
-                Id = id,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                DateOfBirth = entity.DateOfBirth,
-                Biography = entity.Biography,
-                ProfilePictureUrl = entity.ProfilePictureUrl
-            };
-
+            var detailsActor = _mapper.Map<Actor, DetailsEditActorVM>(entity);
             return View(name, detailsActor);
         }
 
         [HttpGet]
-        public IActionResult EditActor(int id)
+        public IActionResult Edit(int id)
         {
-            return DetailsActor(id, "EditActor");
+            return Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult EditActor(DetailsEditActorVM entity)
+        public IActionResult Edit(DetailsEditActorVM entity)
         {
             if (ModelState.IsValid)
             {
@@ -87,11 +75,8 @@ namespace Netolewx.Controllers
                     return NotFound();
                 }
 
-                actor.FirstName = entity.FirstName;
-                actor.LastName = entity.LastName;
-                actor.DateOfBirth = entity.DateOfBirth;
-                actor.Biography = entity.Biography;
-                actor.ProfilePictureUrl = entity.ProfilePictureUrl;
+                actor = _mapper.Map<DetailsEditActorVM, Actor>(entity);
+
 
                 _actorRepo.Update(actor);
                 return RedirectToAction("Index");
@@ -101,7 +86,7 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteActor(int id)
+        public IActionResult Delete(int id)
         {
             var actor = _actorRepo.Get(id);
 

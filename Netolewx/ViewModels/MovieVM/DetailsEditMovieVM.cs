@@ -5,7 +5,7 @@ namespace Netolewx.ViewModels.MovieVM.MovieVM
 {
     public class DetailsEditMovieVM
     {
-        public int id{ get; set; }
+        public int Id{ get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(150, ErrorMessage = "Title cannot exceed 150 characters.")]

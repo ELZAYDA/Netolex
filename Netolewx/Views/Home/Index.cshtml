@@ -11,10 +11,13 @@
     <div class="container">
         <!-- Search Bar -->
         <section class="search-bar">
-            <form>
-                <input type="text" placeholder="Search for movies...">
-                <button type="submit"><i class="fas fa-search"></i></button>
+            <form  asp-action="Index" >
+                <input type="text" name="search" placeholder="Search for movies..." class="form-control">
+                <button type="submit" class="btn btn-primary" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
+
         </section>
 
         <!-- Movie Grid -->
@@ -24,7 +27,7 @@
                 <div class="movie-card" onclick="window.location.href='/Movie/Details/@movie.Id'">
                     <!-- Movie Image -->
                     <div class="movie-image">
-                        <img src="https://picsum.photos/id/237/200/300" alt="@movie.Title">
+                        <img src="~/images/JW.jpg">
                     </div>
 
                     <!-- Movie Info -->

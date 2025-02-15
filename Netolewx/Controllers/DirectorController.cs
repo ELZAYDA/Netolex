@@ -1,17 +1,21 @@
-﻿using BLL.Repositiries.Interfaces;
+﻿using AutoMapper;
+using BLL.Repositiries.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.DirectorVM;
+using Netolewx.ViewModels.MovieVM.MovieVM;
 
 namespace Netolewx.Controllers
 {
     public class DirectorController : Controller
     {
         private readonly IDirectorRepo _directorRepo;
+        private readonly IMapper _mapper;
 
-        public DirectorController(IDirectorRepo directorRepo)
+        public DirectorController(IDirectorRepo directorRepo,IMapper mapper)
         {
             _directorRepo = directorRepo;
+            _mapper=mapper;
         }
 
         public IActionResult Index()
@@ -23,31 +27,25 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddDirector()
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddDirector(AddDirectorVM entity)
+        public IActionResult Add(AddDirectorVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
-                var director = new Director
-                {
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    DateOfBirth = entity.DateOfBirth,
-                    Biography = entity.Biography,
-                    ProfilePictureUrl = entity.ProfilePictureUrl
-                };
+                var director = _mapper.Map<AddDirectorVM, Director>(entity);
+
                 _directorRepo.Add(director);
                 return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult DetailsDirector(int id, string name = "DetailsDirector")
+        public IActionResult Details(int id, string name = "Details")
         {
             var entity = _directorRepo.Get(id);
 
@@ -56,27 +54,20 @@ namespace Netolewx.Controllers
                 return NotFound();
             }
 
-            var detailsDirector = new DetailsEditDirectorVM
-            {
-                Id = id,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                DateOfBirth = entity.DateOfBirth,
-                Biography = entity.Biography,
-                ProfilePictureUrl = entity.ProfilePictureUrl
-            };
+            var detailsDirector = _mapper.Map<Director, DetailsEditDirectorVM>(entity);
+
 
             return View(name, detailsDirector);
         }
 
         [HttpGet]
-        public IActionResult EditDirector(int id)
+        public IActionResult Edit(int id)
         {
-            return DetailsDirector(id, "EditDirector");
+            return Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult EditDirector(DetailsEditDirectorVM entity)
+        public IActionResult Edit(DetailsEditDirectorVM entity)
         {
             if (ModelState.IsValid)
             {
@@ -87,11 +78,7 @@ namespace Netolewx.Controllers
                     return NotFound();
                 }
 
-                director.FirstName = entity.FirstName;
-                director.LastName = entity.LastName;
-                director.DateOfBirth = entity.DateOfBirth;
-                director.Biography = entity.Biography;
-                director.ProfilePictureUrl = entity.ProfilePictureUrl;
+                director = _mapper.Map<DetailsEditDirectorVM, Director>(entity);
 
                 _directorRepo.Update(director);
                 return RedirectToAction("Index");
@@ -101,7 +88,7 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteDirector(int id)
+        public IActionResult Delete(int id)
         {
             var director = _directorRepo.Get(id);
 

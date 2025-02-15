@@ -1,0 +1,47 @@
+﻿@model Movie
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title - Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/Movie/details.css">
+</head>
+<body>
+    <div class="container">
+        <div class="movie-details">
+            <div class="movie-image">
+                <img src="~/images/JW.jpg">
+            </div>
+
+            <div class="movie-info">
+                <h1>@Model.Title (@Model.ReleaseYear)</h1>
+                <p class="description">@Model.Description</p>
+
+                <div class="movie-meta">
+                    <p><strong>Duration:</strong> @Model.Duration min</p>
+                    <p><strong>Rating:</strong> ⭐ 10 / 10</p>
+                    <p><strong>Added on:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</p>
+                    <p><strong>Last Updated:</strong> @Model.UpdatedAt.ToString("MMMM dd, yyyy")</p>
+                </div>
+
+                <div class="buttons">
+                    <a href="@Model.TrailerUrl" target="_blank" class="trailer-btn">
+                        <i class="fas fa-play"></i> Watch Trailer
+                    </a>
+                    <button class="watchlist-btn" onclick="addToWatchlist(@Model.Id)">
+                        <i class="fas fa-plus"></i> Add to Watchlist
+                    </button>
+                    <a href="/home/Index" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Movies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

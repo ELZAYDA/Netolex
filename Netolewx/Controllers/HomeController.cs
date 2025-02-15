@@ -1,5 +1,7 @@
-﻿using BLL.Repositiries.Interfaces;
+﻿using AutoMapper;
+using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.Models;
 using System.Diagnostics;
@@ -12,23 +14,34 @@ namespace Netolewx.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly DbApplicationContext _dbcontext;
         private readonly IMovieRepo _movierepo;
+        private readonly IMapper _mapper;
 
         public HomeController(ILogger<HomeController> logger,
             DbApplicationContext dbcontext,
-            IMovieRepo movierepo)
+            IMovieRepo movierepo,
+            IMapper mapper)
         {
             _logger = logger;
             _dbcontext=dbcontext;
             _movierepo=movierepo;
+            _mapper=mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var movies = _movierepo.GetAll();
-            if(movies == null)
-                return NotFound();
+            var Movies = Enumerable.Empty<Movie>();
+            if (string.IsNullOrEmpty(search))
+            {
+                Movies = _movierepo.GetAll();
+                if (Movies == null)
+                    return NotFound();
+            }
             else
-            return View(movies);
+            {
+                Movies = _movierepo.GetByName(search.ToLower());
+            }
+            return View(Movies);
+
         }
 
         public IActionResult Privacy()
