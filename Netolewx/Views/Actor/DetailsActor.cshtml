@@ -1,0 +1,55 @@
+﻿@model DetailsEditActorVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/Actor/DetailsActors.css" rel="stylesheet" />
+    <title>Actor Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+    <div class="form-container">
+        <h2 class="text-center">🎬 Actor Details</h2>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label">First Name</label>
+            <input asp-for="FirstName" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label">Last Name</label>
+            <input asp-for="LastName" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Biography" class="form-label">Biography</label>
+            <textarea asp-for="Biography" class="form-control" rows="4" readonly></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture</label>
+            <div>
+                <img src="@Model.ProfilePictureUrl" alt="Director Picture" class="img-thumbnail" width="150" />
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/admin/DirectorsManagement" class="btn btn-success">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</body>
+</html>

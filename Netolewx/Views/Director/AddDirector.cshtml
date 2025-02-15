@@ -1,0 +1,62 @@
+﻿@model AddDirectorVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Director</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" />
+    <link href="~/css/Director/AddDirector.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">🎬 Add New Director</h2>
+
+        <div class="form-container">
+            <form asp-action="AddDirector" method="post">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter last name" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+                    <input asp-for="DateOfBirth" type="date" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Biography" class="form-label">Biography</label>
+                    <textarea asp-for="Biography" class="form-control" rows="4" placeholder="Enter biography"></textarea>
+                    <span asp-validation-for="Biography" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture URL</label>
+                    <input asp-for="ProfilePictureUrl" type="url" class="form-control" placeholder="Enter image URL" />
+                    <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i> Add Director
+                </button>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿@model DetailsEditGenreVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Genre</title>
+    <link href="~/css/Genre/EditGenre.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="form-container">
+        <form asp-action="EditGenre" method="post">
+            <input type="hidden" name="id" value="@Model.id" />
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Genre Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Enter genre name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter genre description"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Save
+            </button>
+        </form>
+    </div>
+</body>
+</html>
