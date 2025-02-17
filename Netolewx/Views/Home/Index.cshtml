@@ -27,18 +27,13 @@
                 <div class="movie-card" onclick="window.location.href='/Movie/Details/@movie.Id'">
                     <!-- Movie Image -->
                     <div class="movie-image">
-                        <img src="~/images/JW.jpg">
+                        <img src="@movie.PosterUrl" />
                     </div>
 
                     <!-- Movie Info -->
                     <div class="movie-info">
                         <h4>@movie.Title</h4>
                     </div>
-
-                    <!-- Watchlist Button -->
-                    <button class="watchlist-btn" onclick="event.stopPropagation(); addToWatchlist(@movie.Id);">
-                        <i class="fas fa-plus"></i> Watchlist
-                    </button>
                 </div>
             }
         </div>

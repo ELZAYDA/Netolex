@@ -1,47 +1,246 @@
 ﻿@model Movie
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Model.Title - Details</title>
+    <title>Movies List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="~/css/Movie/details.css">
+    <link rel="stylesheet" href="~/css/details.css">
+
 </head>
 <body>
     <div class="container">
-        <div class="movie-details">
-            <div class="movie-image">
-                <img src="~/images/JW.jpg">
-            </div>
+            <div class="movie-details">
+                <div class="movie-image">
+                <img src="@Model.PosterUrl" alt="@Model.Title Poster">
+                </div>
 
-            <div class="movie-info">
+                <div class="movie-info">
                 <h1>@Model.Title (@Model.ReleaseYear)</h1>
                 <p class="description">@Model.Description</p>
 
-                <div class="movie-meta">
+                    <div class="movie-meta">
                     <p><strong>Duration:</strong> @Model.Duration min</p>
-                    <p><strong>Rating:</strong> ⭐ 10 / 10</p>
+                        <p><strong>Rating:</strong> ⭐ 10 / 10</p>
                     <p><strong>Added on:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</p>
                     <p><strong>Last Updated:</strong> @Model.UpdatedAt.ToString("MMMM dd, yyyy")</p>
-                </div>
+                        <ul class="genre-list">
+                            @foreach (var movieGenre in Model.MovieGenres)
+                            {
+                                <li class="genre-item">@movieGenre.Genre.Name</li> <!-- عرض اسم النوع -->
+                            }
+                        </ul>
+                    </div>
 
-                <div class="buttons">
+                    <div class="buttons">
                     <a href="@Model.TrailerUrl" target="_blank" class="trailer-btn">
-                        <i class="fas fa-play"></i> Watch Trailer
-                    </a>
+                            <i class="fas fa-play"></i> Watch Trailer
+                        </a>
                     <button class="watchlist-btn" onclick="addToWatchlist(@Model.Id)">
-                        <i class="fas fa-plus"></i> Add to Watchlist
-                    </button>
-                    <a href="/home/Index" class="back-btn">
-                        <i class="fas fa-arrow-left"></i> Back to Movies
-                    </a>
+                            <i class="fas fa-plus"></i> Add to Watchlist
+                        </button>
+                        <a href="/home/Index" class="back-btn">
+                            <i class="fas fa-arrow-left"></i> Back to Movies
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        
     </div>
 </body>
 </html>
+<style>
+
+    /* Modern Movie Details Styles */
+    :root {
+        --primary-bg: #1a1a1a;
+        --card-bg: #242424;
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+        --accent-color: #e50914;
+        --button-hover: #ff0f1f;
+        --genre-bg: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--primary-bg);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 20px;
+        margin: 0 auto;
+    }
+
+    .movie-details {
+        background-color: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        margin: 0 auto;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .movie-image {
+        width: 100%;
+        height: 400px; /* Fixed height for the image section */
+        position: relative;
+        overflow: hidden;
+    }
+
+        .movie-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .movie-image:hover img {
+            transform: scale(1.05);
+        }
+
+    .movie-info {
+        padding: 2rem;
+        text-align: center;
+        background-color: var(--card-bg);
+        position: relative;
+    }
+
+        .movie-info h1 {
+            margin: 0 0 1rem;
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+
+    .description {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .movie-meta {
+        margin: 1.5rem 0;
+    }
+
+        .movie-meta p {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .movie-meta strong {
+            color: var(--text-primary);
+        }
+
+    .genre-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .genre-item {
+        background-color: var(--genre-bg);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+        .buttons a,
+        .buttons button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+    .trailer-btn {
+        background-color: var(--accent-color);
+        color: white;
+    }
+
+        .trailer-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+    .watchlist-btn {
+        background-color: transparent;
+        color: var(--text-primary);
+        border: 2px solid var(--text-primary);
+    }
+
+        .watchlist-btn:hover {
+            background-color: var(--text-primary);
+            color: var(--primary-bg);
+        }
+
+    .back-btn {
+        background-color: transparent;
+        color: var(--text-secondary);
+        border: 1px solid var(--text-secondary);
+    }
+
+        .back-btn:hover {
+            background-color: var(--text-secondary);
+            color: var(--primary-bg);
+        }
+
+    /* Animations */
+    .movie-details {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Additional Hover Effects */
+    .movie-meta p:hover strong {
+        color: var(--accent-color);
+        transition: color 0.3s ease;
+    }
+
+    .genre-item:hover {
+        background-color: var(--accent-color);
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+
+    /* Optional: Add a gradient overlay to make text more readable if image is bright */
+    .movie-image::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(to bottom, transparent, var(--card-bg));
+        pointer-events: none;
+    }
+</style>

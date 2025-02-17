@@ -3,6 +3,7 @@ using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Netolewx.ViewModels;
 using Netolewx.ViewModels.MovieVM;
@@ -15,14 +16,19 @@ namespace Netolewx.Controllers
         private readonly IMovieRepo _movierepo;
         private readonly IMapper _mapper;
         private readonly DbApplicationContext _dbApplicationContext;
+        private readonly IGenreRepo _genreRepo;
+        //private readonly IMovieGenreRepo _movieGenreRepo;
 
         public AdminController(
-            IMovieRepo movierepo, IMapper mapper,DbApplicationContext dbApplicationContext)
+            IMovieRepo movierepo, IMapper mapper, DbApplicationContext dbApplicationContext, IGenreRepo genreRepo /*IMovieGenreRepo movieGenreRepo*/)
         {
             _movierepo=movierepo;
             _mapper=mapper;
             _dbApplicationContext=dbApplicationContext;
+            _genreRepo=genreRepo;
+            //_movieGenreRepo=movieGenreRepo;
         }
+
         public IActionResult Index()
         {
 
@@ -36,26 +42,59 @@ namespace Netolewx.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            var model = new AddMovieVM();
+
+            // تحميل الأنواع من قاعدة البيانات
+            model.GenreList = _genreRepo.GetAll().Select(g => new SelectListItem
+            {
+                Text = g.Name,  // اسم النوع
+                Value = g.Id.ToString()  // قيمة النوع
+            }).ToList();
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Add(AddMovieVM entity)
+        public IActionResult Add(AddMovieVM model)
         {
-            if (entity != null)
-                if (ModelState.IsValid)
-                {
-                    var movie = _mapper.Map<AddMovieVM, Movie>(entity);
-                    _movierepo.Add(movie);
+            if (ModelState.IsValid)
+            {
+                // إنشاء كائن الفيلم وإضافته إلى قاعدة البيانات
 
-                    return RedirectToAction("Index");
+                var movie = _mapper.Map<AddMovieVM, Movie>(model);
+
+                _movierepo.Add(movie);   // إضافة الفيلم أولًا
+
+                // الآن يمكننا إضافة العلاقة بعد أن تم حفظ الفيلم وأصبح له Id
+                if (model.SelectedGenres != null)
+                {
+                    foreach (var genreId in model.SelectedGenres)
+                    {
+                        var movieGenre = new MovieGenre
+                        {
+                            MovieId = movie.Id,  // الآن movie.Id يحتوي على القيمة الصحيحة
+                            GenreId = genreId
+                        };
+                        _dbApplicationContext.MovieGenre.Add(movieGenre);  // إضافة العلاقة بين الفيلم والنوع
+                    }
+
+                    _dbApplicationContext.SaveChanges(); // حفظ العلاقات في قاعدة البيانات
                 }
-            return View(entity);
+
+                return RedirectToAction("Index");  // إعادة التوجيه إلى قائمة الأفلام
+            }
+            // إعادة تحميل قائمة الأنواع عند حدوث خطأ
+            model.GenreList = _genreRepo.GetAll()
+                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
+                .ToList();
+
+            return View(model);  // إذا كان هناك خطأ في النموذج، نعرضه مرة أخرى
         }
+
 
         public IActionResult Details(int id, string name = "Details")
         {
-            var entity = _movierepo.Get(id);
+            var entity = _movierepo.GetMoviesWithGenres(id);
 
             if (entity == null) // Check if the movie exists first
             {
@@ -79,14 +118,14 @@ namespace Netolewx.Controllers
         {
             if (ModelState.IsValid)
             {
-                var movie = _movierepo.Get(entity.Id); // Fetch existing movie from DB
 
-                if (movie == null)
+                if (entity == null)
                 {
                     return NotFound(); // Handle movie not found
                 }
 
-                movie = _mapper.Map<DetailsEditMovieVM, Movie>(entity);
+
+                var movie = _mapper.Map<DetailsEditMovieVM, Movie>(entity);
                 _movierepo.Update(movie); // Save updates to DB
                 return RedirectToAction("Index");
             }

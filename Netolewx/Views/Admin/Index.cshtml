@@ -1,63 +1,64 @@
-﻿ <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Movie Management</title>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-     <link rel="stylesheet" href="~/css/Movie/MovieManagement.css">
- </head>
- <body>
-     <div class="container">
-         <h2 class="page-title">🎬 Movie Management</h2>
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/Movie/MovieManagement.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-title">🎬 Movie Management</h2>
 
-         <!-- Add Movie Button -->
-         <div class="add-movie-container">
-             <a href="/Admin/Add" class="btn-add-movie">
-                 <i class="fas fa-plus-circle"></i> Add New Movie
-             </a>
-         </div>
+        <!-- Add Movie Button -->
+        <div class="add-movie-container">
+            <a href="/Admin/Add" class="btn-add-movie">
+                <i class="fas fa-plus-circle"></i> Add New Movie
+            </a>
+        </div>
 
-         <!-- Movies Table -->
-         <div class="table-container">
-             <table class="movie-table">
-                 <thead>
-                     <tr>
-                         <th>ID</th>
-                         <th>Title</th>
-                         <th>Description</th>
-                         <th>Release Year</th>
-                         <th>Duration</th>
-                         <th>Poster</th>
-                         <th>Trailer</th>
-                         <th>Actions</th>
-                     </tr>
-                 </thead>
-                 @foreach (var movie in Model)
-                 {
-                     <tr>
-                         <td>@movie.Id</td>
-                         <td>@movie.Title</td>
-                         <td class="truncate-text">@movie.Description</td>
-                         <td>@movie.ReleaseYear</td>
-                         <td>@movie.Duration min</td>
-                         <td>
-                             <img src="@movie.PosterUrl" alt="Poster" class="poster-img" />
-                         </td>
-                         <td>
-                             <a href="@movie.TrailerUrl" target="_blank" class="btn-trailer">
-                                 <i class="fas fa-play-circle"></i> Watch Trailer
-                             </a>
-                         </td>
-                         <td>
-                             <partial name="_buttons" model="@movie.Id" />
-                         </td>
+        <!-- Movies Table -->
+        <div class="table-container">
+            <table class="movie-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Release Year</th>
+                        <th>Duration</th>
+                        <th>Poster</th>
+                        <th>Trailer</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                @foreach (var movie in Model)
+                {
+                    <tr>
+                        <td>@movie.Id</td>
+                        <td>@movie.Title</td>
+                        <td class="truncate-text">@movie.Description</td>
+                        <td>@movie.ReleaseYear</td>
+                        <td>@movie.Duration min</td>
+                        <td>
+                            <img src="@movie.PosterUrl" alt="Poster" class="poster-img" />
+                        </td>
+                        <td>
+                            <a href="@movie.TrailerUrl" target="_blank" class="btn-trailer">
+                                <i class="fas fa-play-circle"></i> Watch Trailer
+                            </a>
+                        </td>
+                        <td>
+                            <partial name="_buttons" model="@movie.Id" />
+                        </td>
 
-                     </tr>
-                 }
-                 </tbody>
-             </table>
-         </div>
-     </div>
- </body>
- </html>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

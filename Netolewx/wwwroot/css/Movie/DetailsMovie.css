@@ -1,6 +1,6 @@
-/* Modern and Amazing CSS for Add Movie Page */
+/* Modern and Amazing CSS for Add Movie Page (Dark Theme) */
 body {
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: #121212; /* Dark background */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
@@ -8,12 +8,13 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    color: #e0e0e0; /* Light text color */
 }
 
 h2 {
-    color: #343a40;
+    color: #ffffff; /* White text for the heading */
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Darker shadow for contrast */
     margin-bottom: 20px;
     font-size: 32px;
 }
@@ -22,34 +23,35 @@ h2 {
     max-width: 600px;
     width: 100%;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(40, 40, 40, 0.9); /* Dark semi-transparent background */
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Darker shadow */
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
 }
 
 .form-label {
     font-weight: 600;
-    color: #495057;
+    color: #e0e0e0; /* Light text color */
     margin-bottom: 8px;
     display: block;
 }
 
 .form-control {
     border-radius: 8px;
-    border: 1px solid #ced4da;
+    border: 1px solid #444; /* Darker border */
     padding: 10px 15px;
     font-size: 16px;
     width: 80%;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(50, 50, 50, 0.8); /* Dark input background */
+    color: #e0e0e0; /* Light text color */
 }
 
     .form-control:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-        background: rgba(255, 255, 255, 1);
+        border-color: #80bdff; /* Blue focus border */
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Blue focus shadow */
+        background: rgba(50, 50, 50, 1); /* Slightly darker background on focus */
     }
 
 textarea.form-control {
@@ -58,7 +60,7 @@ textarea.form-control {
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #28a745, #218838);
+    background: linear-gradient(135deg, #28a745, #218838); /* Green gradient */
     border: none;
     color: white;
     padding: 12px 20px;
@@ -75,21 +77,19 @@ textarea.form-control {
 }
 
     .btn-success:hover {
-        background: linear-gradient(135deg, #218838, #1e7e34);
+        background: linear-gradient(135deg, #218838, #1e7e34); /* Darker green gradient on hover */
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3); /* Green shadow */
     }
 
     .btn-success:active {
         transform: translateY(0);
-        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3); /* Smaller shadow on click */
     }
 
 .text-danger {
-    color: #dc3545;
+    color: #ff6b6b; /* Red color for error messages */
     font-size: 14px;
     margin-top: 5px;
     display: block;
 }
-
-

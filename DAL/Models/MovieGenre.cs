@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    public class MovieGenre
+    public class MovieGenre 
     {
         public int MovieId { get; set; }
         public int GenreId { get; set; }

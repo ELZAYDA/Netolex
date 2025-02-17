@@ -18,6 +18,7 @@ namespace Netolewx.Helperz
             CreateMap<AddMovieVM, Movie>();
             CreateMap<DetailsEditMovieVM, Movie>().ReverseMap();
 
+
             CreateMap<AddDirectorVM, Director>();
             CreateMap<DetailsEditDirectorVM, Director>().ReverseMap();
 

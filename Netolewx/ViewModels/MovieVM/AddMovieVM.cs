@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Netolewx.ViewModels.MovieVM.MovieVM
@@ -28,6 +29,12 @@ namespace Netolewx.ViewModels.MovieVM.MovieVM
         [Required(ErrorMessage = "Trailer URL is required.")]
         [Url(ErrorMessage = "Please enter a valid URL for the trailer.")]
         public string TrailerUrl { get; set; }
+
+        [Required(ErrorMessage = "Please select at least one genre.")]
+        [MinLength(1, ErrorMessage = "At least one genre must be selected.")]
+        public List<int>? SelectedGenres { get; set; } = new List<int>();
+
+        public IEnumerable<SelectListItem>? GenreList { get; set; } = new List<SelectListItem>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
