@@ -1,0 +1,156 @@
+﻿/* Modern Movie Details Styles */
+:root {
+    --primary-bg: #1a1a1a;
+    --card-bg: #242424;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-color: #e50914;
+    --button-hover: #ff0f1f;
+    --genre-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* Previous styles remain the same until movie-image */
+
+.movie-image {
+    width: 300px; /* Fixed width */
+    height: 450px; /* Fixed height for 2:3 movie poster ratio */
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto; /* Center the image container */
+    border-radius: 10px; /* Optional: rounded corners for the image */
+    margin-top: 20px; /* Add some space at the top */
+}
+
+    .movie-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .movie-image:hover img {
+        transform: scale(1.05);
+    }
+
+/* Rest of your original CSS remains the same */
+.movie-info {
+    padding: 2rem;
+    text-align: center;
+}
+
+    .movie-info h1 {
+        margin: 0 0 1rem;
+        font-size: 2rem;
+        color: var(--text-primary);
+    }
+
+.description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.movie-meta {
+    margin: 1.5rem 0;
+}
+
+    .movie-meta p {
+        margin: 0.5rem 0;
+        color: var(--text-secondary);
+    }
+
+    .movie-meta strong {
+        color: var(--text-primary);
+    }
+
+.genre-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.genre-item {
+    background-color: var(--genre-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+    .buttons a,
+    .buttons button {
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+.trailer-btn {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+    .trailer-btn:hover {
+        background-color: var(--button-hover);
+        transform: translateY(-2px);
+    }
+
+.watchlist-btn {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--text-primary);
+}
+
+    .watchlist-btn:hover {
+        background-color: var(--text-primary);
+        color: var(--primary-bg);
+    }
+
+.back-btn {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--text-secondary);
+}
+
+    .back-btn:hover {
+        background-color: var(--text-secondary);
+        color: var(--primary-bg);
+    }
+
+/* Animations */
+.movie-details {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Additional Hover Effects */
+.movie-meta p:hover strong {
+    color: var(--accent-color);
+    transition: color 0.3s ease;
+}
+
+.genre-item:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}

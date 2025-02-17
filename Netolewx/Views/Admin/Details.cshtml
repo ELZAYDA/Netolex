@@ -1,4 +1,4 @@
-﻿@model DetailsEditMovieVM
+﻿@model DetailsEditMovieVM 
 @{
     Layout = null;
 }
@@ -46,6 +46,16 @@
         <div class="mb-3">
             <label asp-for="TrailerUrl" class="form-label">Trailer URL</label>
             <input asp-for="TrailerUrl" class="form-control" type="url" value="@Model.TrailerUrl" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Genres</label>
+            <ul class="genre-list">
+                @foreach (var movieGenre in Model.MovieGenres)
+                {
+                    <li class="genre-item">@movieGenre.Genre.Name</li>
+                }
+            </ul>
         </div>
 
         <div class="text-center mt-4">

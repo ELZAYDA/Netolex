@@ -23,7 +23,7 @@ namespace Netolewx.Controllers
 
         public IActionResult Details(int id)
         {
-            var movie = _movierepo.Get(id);
+            var movie = _movierepo.GetMoviesWithGenres(id);
             if(movie != null) 
                 return View(movie);
             return NotFound();

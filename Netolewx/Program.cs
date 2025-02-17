@@ -3,6 +3,7 @@ using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Netolewx.Helperz;
+using Netolex.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +17,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DbApplicationContext>(options =>
     options.UseSqlServer(connectionString));
 
+
+builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IMovieRepo, MovieRepo>();
-builder.Services.AddScoped<IGenreRepo, GenreRepo>();
-builder.Services.AddScoped<IDirectorRepo, DirectorRepo>();
-builder.Services.AddScoped<IActorRepo, ActorRepo>();
-builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
 builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfilies()));
 
 

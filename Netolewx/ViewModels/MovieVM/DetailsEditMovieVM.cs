@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAL.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Netolewx.ViewModels.MovieVM.MovieVM
@@ -31,6 +33,11 @@ namespace Netolewx.ViewModels.MovieVM.MovieVM
         [Url(ErrorMessage = "Please enter a valid URL for the trailer.")]
         public string TrailerUrl { get; set; }
 
+        public ICollection<MovieGenre> MovieGenres { get; set; } = new HashSet<MovieGenre>();
+
+        
+    
+    public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
