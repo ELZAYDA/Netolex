@@ -9,18 +9,18 @@ namespace Netolewx.Controllers
 {
     public class DirectorController : Controller
     {
-        private readonly IDirectorRepo _directorRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DirectorController(IDirectorRepo directorRepo,IMapper mapper)
+        public DirectorController(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _directorRepo = directorRepo;
+            _unitOfWork=unitOfWork;
             _mapper=mapper;
         }
 
         public IActionResult Index()
         {
-            var directors = _directorRepo.GetAll();
+            var directors = _unitOfWork.directorRepo.GetAll();
             if (directors == null)
                 return NotFound();
             return View(directors);
@@ -39,7 +39,8 @@ namespace Netolewx.Controllers
             {
                 var director = _mapper.Map<AddDirectorVM, Director>(entity);
 
-                _directorRepo.Add(director);
+                _unitOfWork.directorRepo.Add(director);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             return View(entity);
@@ -47,7 +48,7 @@ namespace Netolewx.Controllers
 
         public IActionResult Details(int id, string name = "Details")
         {
-            var entity = _directorRepo.Get(id);
+            var entity = _unitOfWork.directorRepo.Get(id);
 
             if (entity == null)
             {
@@ -71,7 +72,7 @@ namespace Netolewx.Controllers
         {
             if (ModelState.IsValid)
             {
-                var director = _directorRepo.Get(entity.Id);
+                var director = _unitOfWork.directorRepo.Get(entity.Id);
 
                 if (director == null)
                 {
@@ -80,7 +81,8 @@ namespace Netolewx.Controllers
 
                 director = _mapper.Map<DetailsEditDirectorVM, Director>(entity);
 
-                _directorRepo.Update(director);
+                _unitOfWork.directorRepo.Update(director);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -90,14 +92,15 @@ namespace Netolewx.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var director = _directorRepo.Get(id);
+            var director = _unitOfWork.directorRepo.Get(id);
 
             if (director == null)
             {
                 return NotFound();
             }
 
-            _directorRepo.Delete(director);
+            _unitOfWork.directorRepo.Delete(director);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
     }

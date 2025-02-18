@@ -26,11 +26,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Release Year</th>
                         <th>Duration</th>
                         <th>Poster</th>
-                        <th>Trailer</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -39,16 +37,10 @@
                     <tr>
                         <td>@movie.Id</td>
                         <td>@movie.Title</td>
-                        <td class="truncate-text">@movie.Description</td>
                         <td>@movie.ReleaseYear</td>
                         <td>@movie.Duration min</td>
                         <td>
                             <img src="@movie.PosterUrl" alt="Poster" class="poster-img" />
-                        </td>
-                        <td>
-                            <a href="@movie.TrailerUrl" target="_blank" class="btn-trailer">
-                                <i class="fas fa-play-circle"></i> Watch Trailer
-                            </a>
                         </td>
                         <td>
                             <partial name="_buttons" model="@movie.Id" />

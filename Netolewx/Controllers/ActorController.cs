@@ -9,18 +9,18 @@ namespace Netolewx.Controllers
 {
     public class ActorController : Controller
     {
-        private readonly IActorRepo _actorRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ActorController(IActorRepo actorRepo, IMapper mapper)
+        public ActorController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _actorRepo = actorRepo;
+            _unitOfWork=unitOfWork;
             _mapper=mapper;
         }
 
         public IActionResult Index()
         {
-            var actors = _actorRepo.GetAll();
+            var actors = _unitOfWork.actorRepo.GetAll();
             if (actors == null)
                 return NotFound();
             return View(actors);
@@ -38,7 +38,8 @@ namespace Netolewx.Controllers
             if (entity != null && ModelState.IsValid)
             {
                 var actor = _mapper.Map<AddActorVM, Actor>(entity);
-                _actorRepo.Add(actor);
+                _unitOfWork.actorRepo.Add(actor);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             return View(entity);
@@ -46,7 +47,7 @@ namespace Netolewx.Controllers
 
         public IActionResult Details(int id, string name = "Details")
         {
-            var entity = _actorRepo.Get(id);
+            var entity = _unitOfWork.actorRepo.Get(id);
 
             if (entity == null)
             {
@@ -68,7 +69,7 @@ namespace Netolewx.Controllers
         {
             if (ModelState.IsValid)
             {
-                var actor = _actorRepo.Get(entity.Id);
+                var actor = _unitOfWork.actorRepo.Get(entity.Id);
 
                 if (actor == null)
                 {
@@ -78,7 +79,8 @@ namespace Netolewx.Controllers
                 actor = _mapper.Map<DetailsEditActorVM, Actor>(entity);
 
 
-                _actorRepo.Update(actor);
+                _unitOfWork.actorRepo.Update(actor);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -88,14 +90,15 @@ namespace Netolewx.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var actor = _actorRepo.Get(id);
+            var actor = _unitOfWork.actorRepo.Get(id);
 
             if (actor == null)
             {
                 return NotFound();
             }
 
-            _actorRepo.Delete(actor);
+            _unitOfWork.actorRepo.Delete(actor);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
     }

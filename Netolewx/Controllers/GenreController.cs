@@ -10,18 +10,18 @@ namespace Netolewx.Controllers
 {
     public class GenreController : Controller
     {
-        private readonly IGenreRepo _genrerepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GenreController(IGenreRepo genrerepo,IMapper mapper)
+        public GenreController(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _genrerepo = genrerepo;
+            _unitOfWork=unitOfWork;
             _mapper=mapper;
         }
 
         public IActionResult Index()
         {
-            var genres = _genrerepo.GetAll();
+            var genres = _unitOfWork.genreRepo.GetAll();
             if (genres == null)
                 return NotFound();
             else
@@ -41,7 +41,8 @@ namespace Netolewx.Controllers
             {
                 var genre = _mapper.Map<AddGenreVM, Genre>(entity);
 
-                _genrerepo.Add(genre);
+                _unitOfWork.genreRepo.Add(genre);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             return View(entity);
@@ -49,7 +50,7 @@ namespace Netolewx.Controllers
 
         public IActionResult Details(int id,string name= "Details")
         {
-            var entity = _genrerepo.Get(id);
+            var entity = _unitOfWork.genreRepo.Get(id);
 
             if (entity == null)
             {
@@ -73,7 +74,7 @@ namespace Netolewx.Controllers
         {
             if (ModelState.IsValid)
             {
-                var genre = _genrerepo.Get(entity.Id);
+                var genre = _unitOfWork.genreRepo.Get(entity.Id);
 
                 if (genre == null)
                 {
@@ -82,7 +83,8 @@ namespace Netolewx.Controllers
 
             genre = _mapper.Map<DetailsEditGenreVM,Genre>(entity);
 
-                _genrerepo.Update(genre);
+                _unitOfWork.genreRepo.Update(genre);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -92,14 +94,15 @@ namespace Netolewx.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var genre = _genrerepo.Get(id);
+            var genre = _unitOfWork.genreRepo.Get(id);
 
             if (genre == null)
             {
                 return NotFound();
             }
 
-            _genrerepo.Delete(genre);
+            _unitOfWork.genreRepo.Delete(genre);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
     }

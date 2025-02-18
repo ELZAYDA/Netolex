@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Repositiries.Interfaces
 {
-    public interface IMovieGenreRepo 
+    public interface IWatchListRepo :IGenericRepo<WatchList>
     {
-        public void Add(MovieGenre entity);
         
     }
 }

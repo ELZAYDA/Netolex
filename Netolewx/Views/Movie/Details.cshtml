@@ -12,42 +12,42 @@
 </head>
 <body>
     <div class="container">
-            <div class="movie-details">
-                <div class="movie-image">
+        <div class="movie-details">
+            <div class="movie-image">
                 <img src="@Model.PosterUrl" alt="@Model.Title Poster">
-                </div>
+            </div>
 
-                <div class="movie-info">
+            <div class="movie-info">
                 <h1>@Model.Title (@Model.ReleaseYear)</h1>
                 <p class="description">@Model.Description</p>
 
-                    <div class="movie-meta">
+                <div class="movie-meta">
                     <p><strong>Duration:</strong> @Model.Duration min</p>
-                        <p><strong>Rating:</strong> ⭐ 10 / 10</p>
+                    <p><strong>Rating:</strong> ⭐ 10 / 10</p>
                     <p><strong>Added on:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</p>
                     <p><strong>Last Updated:</strong> @Model.UpdatedAt.ToString("MMMM dd, yyyy")</p>
-                        <ul class="genre-list">
-                            @foreach (var movieGenre in Model.MovieGenres)
-                            {
-                                <li class="genre-item">@movieGenre.Genre.Name</li> <!-- عرض اسم النوع -->
-                            }
-                        </ul>
-                    </div>
+                    <ul class="genre-list">
+                        @foreach (var movieGenre in Model.MovieGenres)
+                        {
+                            <li class="genre-item">@movieGenre.Genre.Name</li> <!-- عرض اسم النوع -->
+                        }
+                    </ul>
+                </div>
 
-                    <div class="buttons">
+                <div class="buttons">
                     <a href="@Model.TrailerUrl" target="_blank" class="trailer-btn">
-                            <i class="fas fa-play"></i> Watch Trailer
-                        </a>
+                        <i class="fas fa-play"></i> Watch Trailer
+                    </a>
                     <button class="watchlist-btn" onclick="addToWatchlist(@Model.Id)">
-                            <i class="fas fa-plus"></i> Add to Watchlist
-                        </button>
-                        <a href="/home/Index" class="back-btn">
-                            <i class="fas fa-arrow-left"></i> Back to Movies
-                        </a>
-                    </div>
+                        <i class="fas fa-plus"></i> Add to Watchlist
+                    </button>
+                    <a href="/home/Index" class="back-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Movies
+                    </a>
                 </div>
             </div>
-        
+        </div>
+
     </div>
 </body>
 </html>
@@ -200,19 +200,19 @@
     }
 
         .watchlist-btn:hover {
-            background-color: var(--text-primary);
-            color: var(--primary-bg);
+            background-color: wheat;
+            color: black;
         }
 
     .back-btn {
         background-color: transparent;
-        color: var(--text-secondary);
+        color: black;
         border: 1px solid var(--text-secondary);
     }
 
         .back-btn:hover {
-            background-color: var(--text-secondary);
-            color: var(--primary-bg);
+            background-color: black;
+            color: wheat;
         }
 
     /* Animations */
