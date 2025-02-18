@@ -17,12 +17,12 @@ namespace BLL.Repositiries.Implementation
 
         public MovieGenreRepo(DbApplicationContext dbcontext) 
         {
+            _dbcontext = dbcontext;
         }
 
-        public int Add(MovieGenre entity)
+        public void Add(MovieGenre entity)
         {
              _dbcontext.Add(entity);
-            return _dbcontext.SaveChanges();
         }
     }
 }

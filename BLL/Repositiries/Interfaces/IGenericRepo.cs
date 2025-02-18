@@ -16,8 +16,8 @@ namespace BLL.Repositiries.Interfaces
 
         int Add(T entity);
 
-        bool Update(T entity);
+        void Update(T entity);
 
-        bool Delete(T entity);
+        void Delete(T entity);
     }
 }

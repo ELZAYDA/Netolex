@@ -22,10 +22,9 @@ namespace BLL.Repositiries.Implementation
             return _dbcontext.SaveChanges();
         }
 
-        public bool Delete(T entity)
+        public void Delete(T entity)
         {
             _dbcontext.Set<T>().Remove(entity);
-            return _dbcontext.SaveChanges() > 0;
         }
 
         public T Get(int id)
@@ -40,7 +39,7 @@ namespace BLL.Repositiries.Implementation
                 : _dbcontext.Set<T>().AsNoTracking().ToList();
         }
 
-        public bool Update(T entity)
+        public void Update(T entity)
         {
             var existingEntity = _dbcontext.Set<T>().Find(entity.Id);
             if (existingEntity != null)
@@ -52,7 +51,6 @@ namespace BLL.Repositiries.Implementation
                 _dbcontext.Set<T>().Update(entity);
             }
 
-            return _dbcontext.SaveChanges() > 0;
         }
 
     }       

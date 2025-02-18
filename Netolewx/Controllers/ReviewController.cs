@@ -8,18 +8,18 @@ namespace Netolewx.Controllers
 {
     public class ReviewController : Controller
     {
-        private readonly IReviewRepo _reviewRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReviewController(IReviewRepo reviewRepo,IMapper mapper)
+        public ReviewController(IUnitOfWork unitOfWork,IMapper mapper)
         {
-            _reviewRepo = reviewRepo;
+            _unitOfWork=unitOfWork;
             _mapper=mapper;
         }
 
         public IActionResult Index()
         {
-            var reviews = _reviewRepo.GetAll();
+            var reviews = _unitOfWork.reviewRepo.GetAll();
             if (reviews == null)
                 return NotFound();
             return View(reviews);
@@ -37,7 +37,8 @@ namespace Netolewx.Controllers
             if (entity != null && ModelState.IsValid)
             {
                 var review = _mapper.Map<AddReviewVM,Review>(entity);
-                _reviewRepo.Add(review);
+                _unitOfWork.reviewRepo.Add(review);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
             return View(entity);
@@ -45,7 +46,7 @@ namespace Netolewx.Controllers
 
         public IActionResult Details(int id, string name = "DetailsReview")
         {
-            var entity = _reviewRepo.Get(id);
+            var entity = _unitOfWork.reviewRepo.Get(id);
 
             if (entity == null)
             {
@@ -68,7 +69,7 @@ namespace Netolewx.Controllers
         {
             if (ModelState.IsValid)
             {
-                var review = _reviewRepo.Get(entity.Id);
+                var review = _unitOfWork.reviewRepo.Get(entity.Id);
 
                 if (review == null)
                 {
@@ -76,7 +77,8 @@ namespace Netolewx.Controllers
                 }
 
                 review = _mapper.Map<DetailsEditReviewVM, Review>(entity);
-                _reviewRepo.Update(review);
+                _unitOfWork.reviewRepo.Update(review);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -86,14 +88,15 @@ namespace Netolewx.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var review = _reviewRepo.Get(id);
+            var review = _unitOfWork.reviewRepo.Get(id);
 
             if (review == null)
             {
                 return NotFound();
             }
 
-            _reviewRepo.Delete(review);
+            _unitOfWork.reviewRepo.Delete(review);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
     }

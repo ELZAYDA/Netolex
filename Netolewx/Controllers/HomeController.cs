@@ -4,6 +4,7 @@ using DAL.Contexts;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.Models;
+using Netolex.ViewModels.MovieVM;
 using System.Diagnostics;
 
 namespace Netolewx.Controllers
@@ -12,37 +13,46 @@ namespace Netolewx.Controllers
     {
 
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly DbApplicationContext _dbcontext;
-        private readonly IMovieRepo _movierepo;
         private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger,
+
+        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork,
             DbApplicationContext dbcontext,
-            IMovieRepo movierepo,
             IMapper mapper)
         {
             _logger = logger;
+            _unitOfWork=unitOfWork;
             _dbcontext=dbcontext;
-            _movierepo=movierepo;
             _mapper=mapper;
         }
 
-        public IActionResult Index(string search)
+        public IActionResult Index(string search, string genreFilter)
         {
-            var Movies = Enumerable.Empty<Movie>();
-            if (string.IsNullOrEmpty(search))
-            {
-                Movies = _movierepo.GetAll();
-                if (Movies == null)
-                    return NotFound();
-            }
-            else
-            {
-                Movies = _movierepo.GetByName(search.ToLower());
-            }
-            return View(Movies);
+            var Movies = _unitOfWork.movieRepo.GetMoviesWithGenres(); // جلب جميع الأفلام
 
+            if (!string.IsNullOrEmpty(search))
+            {
+                Movies = Movies.Where(m => m.Title.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(genreFilter))
+            {
+                Movies = Movies.Where(m => m.MovieGenres.Any(mg => mg.Genre.Name == genreFilter)).ToList();
+            }
+
+            var genres = _unitOfWork.genreRepo.GetAll(); // جلب جميع الأنواع
+            var viewModel = new MovieVM
+            {
+                Movies = Movies.ToList(),
+                Genres = genres.ToList()
+            };
+
+            return View(viewModel);
         }
+
+
 
         public IActionResult Privacy()
         {
