@@ -1,0 +1,112 @@
+﻿@model SignInVM
+@{
+    ViewData["Title"] = "SignIn";
+     Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Netolex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/Account/SignIn.css">
+</head>
+<body>
+    <main>
+        <div class="signin-container">
+            <div class="logo">
+                <h1>Net<span>olex</span></h1>
+            </div>
+            <div class="signin-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your account and continue your streaming journey</p>
+            </div>
+            
+            <form class="signin-form" asp-controller="Account" asp-action="SignIn" method="post">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <label for="EmailOrUsername">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input class="text email" asp-for="EmailOrUsername" placeholder="Email" required="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                
+                <a href="/Account/ForgotPassword" class="forgot-password">Forgot Password?</a>
+                
+                <button type="submit" class="signin-btn">Sign In</button>
+            </form>
+            
+            <div class="signin-divider">
+                <span>OR</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn">Google</button>
+                <button class="social-btn">Facebook</button>
+                <button class="social-btn">Apple</button>
+            </div>
+            
+            <div class=" Signup-link">
+                <p>Don't have an account? <a href="/Account/SignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </main>
+    
+    @* <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-link');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('show');
+            });
+
+            // Basic form validation
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            
+            emailInput.addEventListener('blur', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(this.value)) {
+                    this.classList.add('valid');
+                    this.classList.remove('invalid');
+                } else {
+                    this.classList.add('invalid');
+                    this.classList.remove('valid');
+                }
+            });
+            
+            passwordInput.addEventListener('blur', function() {
+                if (this.value.length >= 6) {
+                    this.classList.add('valid');
+                    this.classList.remove('invalid');
+                } else {
+                    this.classList.add('invalid');
+                    this.classList.remove('valid');
+                }
+            });
+        });
+    </script> *@
+</body>
+</html>

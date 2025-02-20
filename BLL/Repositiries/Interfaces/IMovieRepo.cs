@@ -12,9 +12,9 @@ namespace BLL.Repositiries.Interfaces
     {
         public IQueryable<Movie> GetByName(string name);
 
-        public Movie GetMoviesWithGenres(int id);
+        public Task<Movie> GetMoviesWithGenresAsync(int id);
         
-        public IEnumerable<Movie> GetMoviesWithGenres();
+        public Task<IEnumerable<Movie>> GetMoviesWithGenresAsync();
 
         public void UpdateMovieGenres(Movie movie, Movie existingMovie);
 

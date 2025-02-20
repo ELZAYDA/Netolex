@@ -1,6 +1,8 @@
 using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
+using DAL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Netolewx.Helperz;
 using Netolex.Extentions;
@@ -21,6 +23,18 @@ builder.Services.AddDbContext<DbApplicationContext>(options =>
 builder.Services.AddApplicationServices();
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfilies()));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequiredUniqueChars = 2;
+    options.Password.RequireUppercase = true;
+
+    options.Lockout.AllowedForNewUsers = true;
+
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<DbApplicationContext>()  // ?? ?? ???????
+.AddDefaultTokenProviders();
 
 
 var app = builder.Build();

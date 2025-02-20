@@ -31,11 +31,14 @@ namespace BLL.Repositories.Implementation
             //movieGenreRepo = new MovieGenreRepo(_dbcontext);
         }
 
-        public int Complete()
+        public async Task<int> Complete()
         {
-            return _dbcontext.SaveChanges();
+            return  await _dbcontext.SaveChangesAsync();
         }
 
-        
+        public async ValueTask DisposeAsync()
+        {
+          await  _dbcontext.DisposeAsync();
+        }
     }
 }

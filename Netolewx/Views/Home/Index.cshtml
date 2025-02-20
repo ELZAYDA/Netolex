@@ -151,23 +151,69 @@
 
     .btn-outline-secondary {
         background-color: transparent;
-        border: 1px solid var(--border-color);
         color: var(--text-secondary);
         padding: 0.5rem 1rem;
-        border-radius: 4px;
         cursor: pointer;
-        transition: all 0.2s;
-        text-decoration: none; /* يضمن عدم وجود خط تحت النص */
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
     }
 
-        .btn-outline-secondary:hover,
-        .btn-outline-secondary.active {
+        /* إضافة خط أحمر متحرك عند التحويم */
+        .btn-outline-secondary::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
             background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #ffffff;
-            text-decoration: none; /* يضمن عدم ظهور الخط عند التحويل */
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
+        .btn-outline-secondary:hover::after {
+            width: 100%;
+        }
+
+        /* تحسين تأثير التحويم للأزرار */
+        .btn-outline-secondary:hover {
+            background-color: rgba(255, 51, 51, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 51, 51, 0.15);
+        }
+
+        /* تأثير النقر */
+        .btn-outline-secondary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(255, 51, 51, 0.15);
+        }
+
+        /* تنسيق الزر النشط */
+        .btn-outline-secondary.active {
+            background-color: rgba(255, 51, 51, 0.2);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            position: relative;
+        }
+
+            .btn-outline-secondary.active::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: var(--accent-color);
+            }
+
+    /* مؤثر انتقالي للزر النشط */
+    .btn-group .btn-outline-secondary.active {
+        position: relative;
+        z-index: 1;
+    }
 
     /* ===== Movie Cards Styles ===== */
     .movie-card {
@@ -251,12 +297,16 @@
         }
 
     /* Movie Grid Container */
-    .row {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 25px;
-        padding: 20px;
-    }
+.row {
+    display: flex;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    padding: 20px;
+    justify-items: start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
     /* Movie Card Base */
     .movie-card {
@@ -323,7 +373,6 @@
     .movie-card:hover .movie-image img {
         transform: scale(1.05);
     }
-
 </style>
 
 

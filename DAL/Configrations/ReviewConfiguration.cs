@@ -16,10 +16,7 @@ namespace DAL.Configurations
                    .HasForeignKey(r => r.MovieId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(r => r.User)
-                   .WithMany(u => u.Reviews)
-                   .HasForeignKey(r => r.UserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+           
         }
     }
 }

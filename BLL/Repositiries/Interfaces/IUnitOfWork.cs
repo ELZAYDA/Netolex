@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Repositiries.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IAsyncDisposable
     {
         IMovieRepo movieRepo { get; set; }
         IGenreRepo genreRepo { get; set; }
@@ -15,6 +15,6 @@ namespace BLL.Repositiries.Interfaces
         IWatchListRepo watchListRepo { get; set; }
         IReviewRepo reviewRepo { get; set; }
         //IMovieGenreRepo movieGenreRepo { get; set; }
-        public int Complete();
+        public Task<int> Complete();
     }
 }

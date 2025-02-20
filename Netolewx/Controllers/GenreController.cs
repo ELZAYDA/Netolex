@@ -5,6 +5,7 @@ using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.GenreVM;
 using Netolewx.ViewModels.MovieVM.MovieVM;
+using System.Threading.Tasks;
 
 namespace Netolewx.Controllers
 {
@@ -13,15 +14,15 @@ namespace Netolewx.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GenreController(IUnitOfWork unitOfWork,IMapper mapper)
+        public GenreController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork=unitOfWork;
-            _mapper=mapper;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var genres = _unitOfWork.genreRepo.GetAll();
+            var genres = await _unitOfWork.genreRepo.GetAllAsync();  // Async call to get all genres
             if (genres == null)
                 return NotFound();
             else
@@ -35,22 +36,22 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddGenreVM entity)
+        public async Task<IActionResult> Add(AddGenreVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
                 var genre = _mapper.Map<AddGenreVM, Genre>(entity);
 
-                _unitOfWork.genreRepo.Add(genre);
-                _unitOfWork.Complete();
+                 _unitOfWork.genreRepo.Add(genre);  // Async call to add genre
+                await _unitOfWork.Complete();  // Async call to complete the unit of work
                 return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult Details(int id,string name= "Details")
+        public async Task<IActionResult> Details(int id, string name = "Details")
         {
-            var entity = _unitOfWork.genreRepo.Get(id);
+            var entity = await _unitOfWork.genreRepo.GetAsync(id);  // Async call to get genre by id
 
             if (entity == null)
             {
@@ -59,32 +60,31 @@ namespace Netolewx.Controllers
 
             var detailsGenre = _mapper.Map<Genre, DetailsEditGenreVM>(entity);
 
-
             return View(name, detailsGenre);
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return Details(id, "Edit");
+            return await Details(id, "Edit");  // Reuse Details method for editing
         }
 
         [HttpPost]
-        public IActionResult Edit(DetailsEditGenreVM entity)
+        public async Task<IActionResult> Edit(DetailsEditGenreVM entity)
         {
             if (ModelState.IsValid)
             {
-                var genre = _unitOfWork.genreRepo.Get(entity.Id);
+                var genre = await _unitOfWork.genreRepo.GetAsync(entity.Id);  // Async call to get genre by id
 
                 if (genre == null)
                 {
                     return NotFound();
                 }
 
-            genre = _mapper.Map<DetailsEditGenreVM,Genre>(entity);
+                genre = _mapper.Map<DetailsEditGenreVM, Genre>(entity);
 
-                _unitOfWork.genreRepo.Update(genre);
-                _unitOfWork.Complete();
+                 _unitOfWork.genreRepo.Update(genre);  // Async call to update genre
+                await _unitOfWork.Complete();  // Async call to complete the unit of work
                 return RedirectToAction("Index");
             }
 
@@ -92,17 +92,17 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var genre = _unitOfWork.genreRepo.Get(id);
+            var genre = await _unitOfWork.genreRepo.GetAsync(id);  // Async call to get genre by id
 
             if (genre == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.genreRepo.Delete(genre);
-            _unitOfWork.Complete();
+             _unitOfWork.genreRepo.Delete(genre);  // Async call to delete genre
+            await _unitOfWork.Complete();  // Async call to complete the unit of work
             return RedirectToAction("Index");
         }
     }

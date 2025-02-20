@@ -19,6 +19,5 @@ namespace DAL.Models
 
         // Navigation properties
         public Movie Movie { get; set; }
-        public User User { get; set; }
     }
 }

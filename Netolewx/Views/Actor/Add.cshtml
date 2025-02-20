@@ -17,7 +17,16 @@
         <h2 class="text-center">🎬 Add New Actor</h2>
 
         <div class="form-container">
-            <form asp-action="Add" method="post">
+            <form asp-action="Add" method="post" enctype="multipart/form-data">
+
+                <div class="mb-3 file-upload-container">
+                    <label asp-for="ImageName" class="form-label file-upload-label">
+                        <span class="upload-icon">📷</span>
+                        <span class="upload-text">Upload Profile Image</span>
+                    </label>
+                    <input asp-for="ImageName" class="form-control-file file-upload-input" type="file" />
+                </div>
+
                 <div class="mb-3">
                     <label asp-for="FirstName" class="form-label">First Name</label>
                     <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
@@ -42,11 +51,7 @@
                     <span asp-validation-for="Biography" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture URL</label>
-                    <input asp-for="ProfilePictureUrl" type="url" class="form-control" placeholder="Enter image URL" />
-                    <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
-                </div>
+              
 
                 <button type="submit" class="btn btn-success">
                     <i class="fas fa-plus-circle"></i> Add Actor
@@ -60,3 +65,148 @@
     }
 </body>
 </html>
+<style>
+    /* Modern and Amazing CSS for Add Movie Page */
+    body {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h2 {
+        color: #343a40;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        font-size: 32px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        width: 100%;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+        font-size: 16px;
+        width: 80%;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            background: rgba(255, 255, 255, 1);
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745, #218838);
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    /* Container for the file upload */
+    .file-upload-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    /* Style for the label (acts as the upload button) */
+    .file-upload-label {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .file-upload-label:hover {
+            background-color: #0056b3;
+        }
+
+    /* Hide the default file input */
+    .file-upload-input {
+        display: none;
+    }
+
+    /* Style for the upload icon */
+    .upload-icon {
+        margin-right: 8px;
+        font-size: 18px;
+    }
+
+    /* Style for the upload text */
+    .upload-text {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    /* Optional: Add a border and padding to the container for better visual separation */
+    .file-upload-container {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+        .file-upload-container:hover {
+            border-color: #007bff;
+        }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-success:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+</style>

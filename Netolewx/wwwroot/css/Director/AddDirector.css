@@ -28,7 +28,55 @@ h2 {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
+/* Container for the file upload */
+.file-upload-container {
+    text-align: center;
+    margin: 20px 0;
+}
 
+/* Style for the label (acts as the upload button) */
+.file-upload-label {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-upload-label:hover {
+    background-color: #0056b3;
+}
+
+/* Hide the default file input */
+.file-upload-input {
+    display: none;
+}
+
+/* Style for the upload icon */
+.upload-icon {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Style for the upload text */
+.upload-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Optional: Add a border and padding to the container for better visual separation */
+.file-upload-container {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.file-upload-container:hover {
+    border-color: #007bff;
+}
 .form-label {
     font-weight: 600;
     color: #495057;

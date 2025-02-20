@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Contexts
 {
-    public class DbApplicationContext : DbContext
+    public class DbApplicationContext : IdentityDbContext<ApplicationUser>
     {
         public DbApplicationContext(DbContextOptions<DbApplicationContext> options)
           : base(options)
@@ -21,7 +21,7 @@ namespace DAL.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);//for identity
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbApplicationContext).Assembly);
         }
     }

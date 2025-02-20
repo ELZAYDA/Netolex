@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MovieVerse</title>
+    <link rel="stylesheet" href="~/css/base.css">
+    <link rel="stylesheet" href="~/css/_Authlayout.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="page-container">
+        <header class="main-header">
+            <div class="header-content">
+               
+                <nav class="main-nav">
+                    <ul>
+                        <li><a asp-controller="home" asp-action="index">Movies</a></li>
+                        <li><a href="/tv-shows">TV Shows</a></li>
+                        <li><a href="/watchlist">Watchlist</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            @RenderBody()
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="copyright">
+                    <p>&copy; @DateTime.Now.Year MovieVerse. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

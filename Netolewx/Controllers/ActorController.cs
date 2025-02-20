@@ -4,6 +4,7 @@ using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.ViewModels.ActorVM;
 using Netolewx.ViewModels.MovieVM.MovieVM;
+using Netolex.Services.Document_Settings;
 
 namespace Netolewx.Controllers
 {
@@ -18,13 +19,15 @@ namespace Netolewx.Controllers
             _mapper=mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var actors = _unitOfWork.actorRepo.GetAll();
-            if (actors == null)
+            var actors = await _unitOfWork.actorRepo.GetAllAsync(); // Await the asynchronous call
+            if (actors == null || !actors.Any()) // Check if the result is null or empty
                 return NotFound();
+
             return View(actors);
         }
+
 
         [HttpGet]
         public IActionResult Add()
@@ -33,21 +36,26 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddActorVM entity)
+        public async Task<IActionResult> Add(AddActorVM entity)
         {
             if (entity != null && ModelState.IsValid)
             {
+                if (entity.ImageName!=null)
+                    entity.Image =await DocumentSettings.UploadFile(entity.ImageName, "images");
+                else
+                    entity.Image="No image";
                 var actor = _mapper.Map<AddActorVM, Actor>(entity);
                 _unitOfWork.actorRepo.Add(actor);
-                _unitOfWork.Complete();
-                return RedirectToAction("Index");
+               var count = await _unitOfWork.Complete();
+
+               return RedirectToAction("Index");
             }
             return View(entity);
         }
 
-        public IActionResult Details(int id, string name = "Details")
+        public async Task<IActionResult> Details(int id, string name = "Details")
         {
-            var entity = _unitOfWork.actorRepo.Get(id);
+            var entity = await _unitOfWork.actorRepo.GetAsync(id);
 
             if (entity == null)
             {
@@ -59,17 +67,21 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public Task<IActionResult> Edit(int id)
         {
             return Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult Edit(DetailsEditActorVM entity)
+        public async Task<IActionResult >Edit(DetailsEditActorVM entity)
         {
             if (ModelState.IsValid)
             {
-                var actor = _unitOfWork.actorRepo.Get(entity.Id);
+                if (entity.Image == null)
+                {
+                    entity.Image=await DocumentSettings.UploadFile(entity.ImageName, "images");
+                }
+                var actor = await _unitOfWork.actorRepo.GetAsync(entity.Id);
 
                 if (actor == null)
                 {
@@ -80,7 +92,7 @@ namespace Netolewx.Controllers
 
 
                 _unitOfWork.actorRepo.Update(actor);
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -88,17 +100,18 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var actor = _unitOfWork.actorRepo.Get(id);
-
+            var actor = await _unitOfWork.actorRepo.GetAsync(id);
             if (actor == null)
             {
                 return NotFound();
             }
 
             _unitOfWork.actorRepo.Delete(actor);
-            _unitOfWork.Complete();
+            var count =await _unitOfWork.Complete();
+            if (count > 0)
+                 DocumentSettings.DeleteFile(actor.Image, "images");
             return RedirectToAction("Index");
         }
     }

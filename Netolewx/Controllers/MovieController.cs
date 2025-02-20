@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Repositiries.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Netolewx.Controllers
 {
@@ -12,18 +13,19 @@ namespace Netolewx.Controllers
         public MovieController(IUnitOfWork unitOfWork,
             IMapper mapper)
         {
-            _unitOfWork=unitOfWork;
-            _mapper=mapper;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var movie = _unitOfWork.movieRepo.GetMoviesWithGenres(id);
-            if(movie != null) 
+            var movie = await _unitOfWork.movieRepo.GetMoviesWithGenresAsync(id); // Async call
+            if (movie != null)
                 return View(movie);
             return NotFound();
         }

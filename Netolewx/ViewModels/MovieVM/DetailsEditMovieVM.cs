@@ -35,9 +35,13 @@ namespace Netolewx.ViewModels.MovieVM.MovieVM
 
         public ICollection<MovieGenre> MovieGenres { get; set; } = new HashSet<MovieGenre>();
 
-        
-    
-    public DateTime UpdatedAt { get; set; }
+        [Required(ErrorMessage = "Please select at least one genre.")]
+        [MinLength(1, ErrorMessage = "At least one genre must be selected.")]
+        public List<int>? SelectedGenres { get; set; } = new List<int>();
+
+        public IEnumerable<SelectListItem>? GenreList { get; set; } = new List<SelectListItem>();
+
+        public DateTime UpdatedAt { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

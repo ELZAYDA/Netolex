@@ -12,10 +12,7 @@ namespace DAL.Configurations
         {
             builder.HasKey(w => w.Id);
 
-            builder.HasOne(w => w.User)
-                   .WithMany(u => u.WatchLists)
-                   .HasForeignKey(w => w.UserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+           
 
 
             builder.Property(w => w.Status)

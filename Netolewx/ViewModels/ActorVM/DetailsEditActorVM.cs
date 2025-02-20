@@ -22,7 +22,9 @@ namespace Netolewx.ViewModels.ActorVM
         [StringLength(1000, ErrorMessage = "Biography cannot exceed 1000 characters.")]
         public string Biography { get; set; }
 
-        [Url(ErrorMessage = "Invalid URL format.")]
-        public string ProfilePictureUrl { get; set; }
+
+        public IFormFile? ImageName { get; set; }
+
+        public string? Image { get; set; }
     }
 }

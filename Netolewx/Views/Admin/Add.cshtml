@@ -44,12 +44,7 @@
 
                 <div class="form-group">
                     <label class="form-label">Genres</label>
-                    <select class="form-control" name="SelectedGenres" multiple>
-                        @foreach (var genre in Model.GenreList)
-                        {
-                            <option value="@genre.Value">@genre.Text</option>
-                        }
-                    </select>
+                    <select class="form-control" name="SelectedGenres" asp-items="Model.GenreList" multiple></select>
                     <span asp-validation-for="SelectedGenres" class="text-danger"></span>
                 </div>
 

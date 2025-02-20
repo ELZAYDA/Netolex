@@ -6,31 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Netolewx.Models;
 using Netolex.ViewModels.MovieVM;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Netolewx.Controllers
 {
     public class HomeController : Controller
     {
-
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly DbApplicationContext _dbcontext;
         private readonly IMapper _mapper;
 
-
-        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork,
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork,
             DbApplicationContext dbcontext,
             IMapper mapper)
         {
             _logger = logger;
-            _unitOfWork=unitOfWork;
-            _dbcontext=dbcontext;
-            _mapper=mapper;
+            _unitOfWork = unitOfWork;
+            _dbcontext = dbcontext;
+            _mapper = mapper;
         }
 
-        public IActionResult Index(string search, string genreFilter)
+        public async Task<IActionResult> Index(string search, string genreFilter)
         {
-            var Movies = _unitOfWork.movieRepo.GetMoviesWithGenres(); // جلب جميع الأفلام
+            var Movies = await _unitOfWork.movieRepo.GetMoviesWithGenresAsync(); // Async call to get movies with genres
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -42,7 +42,7 @@ namespace Netolewx.Controllers
                 Movies = Movies.Where(m => m.MovieGenres.Any(mg => mg.Genre.Name == genreFilter)).ToList();
             }
 
-            var genres = _unitOfWork.genreRepo.GetAll(); // جلب جميع الأنواع
+            var genres = await _unitOfWork.genreRepo.GetAllAsync(); // Async call to get all genres
             var viewModel = new MovieVM
             {
                 Movies = Movies.ToList(),
@@ -51,8 +51,6 @@ namespace Netolewx.Controllers
 
             return View(viewModel);
         }
-
-
 
         public IActionResult Privacy()
         {

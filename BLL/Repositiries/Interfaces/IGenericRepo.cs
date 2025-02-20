@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace BLL.Repositiries.Interfaces
     public interface IGenericRepo<T> where T : ModelBase
     {
         //add, update, delete, get
-        T Get(int id);
+        Task<T> GetAsync(int id);
 
-        IEnumerable<T> GetAll(bool trackChanges=false);
+        Task <IEnumerable<T>> GetAllAsync(bool trackChanges=false);
 
         int Add(T entity);
 

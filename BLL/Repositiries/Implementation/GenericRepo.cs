@@ -27,16 +27,16 @@ namespace BLL.Repositiries.Implementation
             _dbcontext.Set<T>().Remove(entity);
         }
 
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            return _dbcontext.Set<T>().Find(id);
+            return await _dbcontext.Set<T>().FindAsync(id);
         }
 
-        public IEnumerable<T> GetAll(bool trackChanges = false)
+        public async Task<IEnumerable<T>> GetAllAsync(bool trackChanges = false)
         {
-            return trackChanges
-                ? _dbcontext.Set<T>().ToList()
-                : _dbcontext.Set<T>().AsNoTracking().ToList();
+            return await (trackChanges
+                ? _dbcontext.Set<T>().ToListAsync()
+                : _dbcontext.Set<T>().AsNoTracking().ToListAsync());
         }
 
         public void Update(T entity)
