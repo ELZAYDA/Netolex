@@ -15,7 +15,7 @@ namespace DAL.Models
         public int ReleaseYear { get; set; }
         public int Duration { get; set; } // in minutes
         public string PosterUrl { get; set; }
-        public string TrailerUrl { get; set; }
+        public string? TrailerUrl { get; set; }
         public double Rating { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

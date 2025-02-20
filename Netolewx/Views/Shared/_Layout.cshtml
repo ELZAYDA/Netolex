@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Store</title>
+    <title>Netolex</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/layout.css">
 
 </head>
-<body>
+<body style="    background-color: black;">
     <nav class="nav-bar">
         <div class="nav-content">
             <div class="logo">
@@ -22,20 +22,18 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-link">
-                <li><a class="active" asp-controller="home" asp-action="index">Home</a></li>
-                <li><a asp-controller="home" asp-action="About">About</a></li>
+                <li><a class="active" asp-controller="home" asp-action="index" >Movies</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Admin <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle">  Admin Panal <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-nav-link">
                         <li><a href="/Admin/Index/">Movie Management</a></li>
                         <li><a href="/Genre/index/">Genre Management</a></li>
                         <li><a href="/Director/index/">Director Management</a></li>
                         <li><a href="/Actor/index/">Actor Management</a></li>
                         <li><a href="/Review/index/">Review Management</a></li>
-                        <li><a href="#">Logout</a></li>
                     </ul>
                 </li>
-                <li><a href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a asp-controller="account" asp-action="SignUp"><i class="fas fa-sign-in-alt"></i> Login</a></li>
             </ul>
         </div>
     </nav>
@@ -44,9 +42,23 @@
         @RenderBody()
     </main>
 
-    <footer>
-        <p>&copy; 2024 Movie Store. All rights reserved.</p>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                <p>&copy; @DateTime.Now.Year MovieVerse. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+    </div>
+
 </body>
 </html>
 <style>

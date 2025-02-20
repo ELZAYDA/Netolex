@@ -17,7 +17,16 @@
         <h2 class="text-center">🎬 Add New Director</h2>
 
         <div class="form-container">
-            <form asp-action="Add" method="post">
+            <form asp-action="Add" method="post" enctype="multipart/form-data">
+                
+                <div class="mb-3 file-upload-container">
+                    <label asp-for="ImageName" class="form-label file-upload-label">
+                        <span class="upload-icon">📷</span>
+                        <span class="upload-text">Upload Profile Image</span>
+                    </label>
+                    <input asp-for="ImageName" class="form-control-file file-upload-input" type="file" />
+                </div>
+                
                 <div class="mb-3">
                     <label asp-for="FirstName" class="form-label">First Name</label>
                     <input asp-for="FirstName" class="form-control" placeholder="Enter first name" />
@@ -42,12 +51,7 @@
                     <span asp-validation-for="Biography" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture URL</label>
-                    <input asp-for="ProfilePictureUrl" type="url" class="form-control" placeholder="Enter image URL" />
-                    <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
-                </div>
-
+                
                 <button type="submit" class="btn btn-success">
                     <i class="fas fa-plus-circle"></i> Add Director
                 </button>

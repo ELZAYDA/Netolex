@@ -24,6 +24,7 @@
             <table class="Actor-table">
                 <thead>
                     <tr>
+                        <th>Profile</th>
                         <th>ID</th>
                         <th>Full Name</th>
                         <th>Date of Birth</th>
@@ -32,15 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var Actor in Model)
+                    @foreach (var Actor in Model as IEnumerable<Actor>)
                     {
                         <tr>
+                            <td>
+                                <img src="~/files/images/@Actor.Image" alt="Profile Image" class="profile-image" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" />
+                            </td>
                             <td>@Actor.Id</td>
                             <td>@Actor.FirstName @Actor.LastName</td>
                             <td>@Actor.DateOfBirth.ToString("yyyy-MM-dd")</td>
-                            <td>
-                                <img src="@Actor.ProfilePictureUrl" alt="Actor Picture" class="img-thumbnail" width="50" height="50" />
-                            </td>
                             <td>
                                 <partial name="_buttons" model="@Actor.Id" />
                             </td>

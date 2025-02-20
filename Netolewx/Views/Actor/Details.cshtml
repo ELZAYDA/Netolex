@@ -18,6 +18,12 @@
 
         <input type="hidden" asp-for="Id" />
 
+        <div class="image-container">
+            <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+                <img src="~/files/images/@Model.Image" alt="Profile Image" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;" />
+            </div>
+        </div>
+
         <div class="mb-3">
             <label asp-for="FirstName" class="form-label">First Name</label>
             <input asp-for="FirstName" class="form-control" readonly />
@@ -38,18 +44,135 @@
             <textarea asp-for="Biography" class="form-control" rows="4" readonly></textarea>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture</label>
-            <div>
-                <img src="@Model.ProfilePictureUrl" alt="Director Picture" class="img-thumbnail" width="150" />
-            </div>
-        </div>
-
         <div class="text-center mt-4">
-            <a href="/admin/Index" class="btn btn-success">
+            <a asp-controller="Actor" asp-action="Index" class="btn btn-success">
                 <i class="fas fa-arrow-left"></i> Back to List
             </a>
         </div>
     </div>
 </body>
 </html>
+<style>
+    /* Modern and Amazing CSS for Add Movie Page */
+    body {
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h2 {
+        color: #343a40;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        font-size: 32px;
+    }
+    /* Container for the image */
+    .image-container {
+        display: inline-block;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 50%; /* Make the container circular */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Style for the image */
+    .profile-image {
+        width: 200px; /* Adjust the size as needed */
+        height: 200px; /* Adjust the size as needed */
+        border-radius: 50%; /* Make the image circular */
+        object-fit: cover; /* Ensures the image covers the area without distortion */
+        border: 3px solid #007bff; /* Border color */
+        transition: border-color 0.3s ease;
+    }
+
+        .profile-image:hover {
+            border-color: #0056b3; /* Change border color on hover */
+        }
+
+    .form-container {
+        max-width: 600px;
+        width: 100%;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px 15px;
+        font-size: 16px;
+        width: 80%;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            background: rgba(255, 255, 255, 1);
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745, #218838);
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-success:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+</style>

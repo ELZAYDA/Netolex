@@ -24,6 +24,7 @@
             <table class="director-table">
                 <thead>
                     <tr>
+                        <th>Profile</th>
                         <th>ID</th>
                         <th>Full Name</th>
                         <th>Date of Birth</th>
@@ -32,15 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var director in Model)
+                    @foreach (var director in Model as IEnumerable<Director>)
                     {
                         <tr>
+                            <td>
+                                <img src="~/files/images/@director.Image" alt="Profile Image" class="profile-image" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" />
+                            </td>
                             <td>@director.Id</td>
                             <td>@director.FirstName @director.LastName</td>
                             <td>@director.DateOfBirth.ToString("yyyy-MM-dd")</td>
-                            <td>
-                                <img src="@director.ProfilePictureUrl" alt="Director Picture" class="img-thumbnail" width="50" height="50" />
-                            </td>
                             <td>
                                 <partial name="_buttons" model="@director.Id" />
                             </td>

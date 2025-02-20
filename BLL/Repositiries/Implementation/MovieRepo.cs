@@ -17,29 +17,32 @@ namespace BLL.Repositiries.Implementation
         {
         }
 
-        public IQueryable<Movie> GetByName(string name)
-                => _dbcontext.Movies.Where(m => m.Title.ToLower().Contains(name));
-
-        public Movie GetMoviesWithGenres(int id)
+        public  IQueryable<Movie> GetByName(string name)
         {
-            return _dbcontext.Movies
-                           .Include(m => m.MovieGenres) // تحميل العلاقة بين الأفلام والأنواع
-                           .ThenInclude(mg => mg.Genre) // تحميل تفاصيل النوع لكل فيلم
-                           .Where(m => m.Id == id) // إضافة شرط لتصفية الأفلام بناءً على الـ id
-                           .AsNoTracking()
-                           .FirstOrDefault();
-                            // تحسين الأداء بعدم تتبع الكائنات
-                            // تحويل النتيجة إلى قائمة        }
+            return  _dbcontext.Movies.Where(m => m.Title.ToLower().Contains(name));
         }
 
-        public IEnumerable<Movie> GetMoviesWithGenres()
+        public async Task<Movie> GetMoviesWithGenresAsync(int id)
         {
-            return _dbcontext.Movies
-                           .Include(m => m.MovieGenres) // تحميل العلاقة بين الأفلام والأنواع
-                           .ThenInclude(mg => mg.Genre) // تحميل تفاصيل النوع لكل فيلم
-                           .AsNoTracking() // تحسين الأداء بعدم تتبع الكائنات
-                           .ToList(); // تحويل النتيجة إلى قائمة        }
+            // Await the query to fetch a movie with genres by ID
+            return await _dbcontext.Movies
+                .Include(m => m.MovieGenres) // Load the relationship between movies and genres
+                .ThenInclude(mg => mg.Genre) // Load genre details for each movie
+                .Where(m => m.Id == id) // Filter by movie ID
+                .AsNoTracking() // Improve performance by not tracking entities
+                .FirstOrDefaultAsync(); // Use FirstOrDefaultAsync for asynchronous fetching
         }
+
+        public async Task<IEnumerable<Movie>> GetMoviesWithGenresAsync()
+        {
+            // Await the query to fetch all movies with their genres
+            return await _dbcontext.Movies
+                .Include(m => m.MovieGenres) // Load the relationship between movies and genres
+                .ThenInclude(mg => mg.Genre) // Load genre details for each movie
+                .AsNoTracking() // Improve performance by not tracking entities
+                .ToListAsync(); // Use ToListAsync to execute the query asynchronously
+        }
+
 
         public void UpdateMovieGenres(Movie movie, Movie existingMovie)
         {
@@ -52,5 +55,7 @@ namespace BLL.Repositiries.Implementation
                 existingMovie.MovieGenres.Add(movieGenre); // إضافة علاقات جديدة
             }
         }
+
+       
     }
 }

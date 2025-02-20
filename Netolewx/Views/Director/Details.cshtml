@@ -18,6 +18,12 @@
 
         <input type="hidden" asp-for="Id" />
 
+        <div class="image-container">
+            <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+                <img src="~/files/images/@Model.Image" alt="Profile Image" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;" />
+            </div>
+        </div>
+
         <div class="mb-3">
             <label asp-for="FirstName" class="form-label">First Name</label>
             <input asp-for="FirstName" class="form-control" readonly />
@@ -38,12 +44,7 @@
             <textarea asp-for="Biography" class="form-control" rows="4" readonly></textarea>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture</label>
-            <div>
-                <img src="@Model.ProfilePictureUrl" alt="Director Picture" class="img-thumbnail" width="150" />
-            </div>
-        </div>
+        
 
         <div class="text-center mt-4">
             <a href="/admin/Index" class="btn btn-success">

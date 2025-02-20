@@ -15,8 +15,29 @@
 </head>
 <body>
     <div class="form-container">
-        <form asp-action="Edit" method="post">
+
+        @if (!string.IsNullOrEmpty(Model.Image) && Model.Image != "No image")
+        {
+            <div class="image-container">
+                <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+                    <img src="~/files/images/@Model.Image" alt="Profile Image" class="profile-image" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;" />
+                </div>
+            </div>
+        }
+
+
+        <form asp-action="Edit" method="post"enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
+
+            <!-- Hidden field to store the image name -->
+            <input type="hidden" asp-for="Image" />
+            <div class="mb-3 file-upload-container">
+                <label asp-for="ImageName" class="form-label file-upload-label">
+                    <span class="upload-icon">📷</span>
+                    <span class="upload-text">Upload Profile Image</span>
+                </label>
+                <input asp-for="ImageName" value="@TempData[" ImageName"]" class="form-control-file file-upload-input" type="file" />
+            </div>
 
             <div class="mb-3">
                 <label asp-for="FirstName" class="form-label">First Name</label>
@@ -42,11 +63,6 @@
                 <span asp-validation-for="Biography" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="ProfilePictureUrl" class="form-label">Profile Picture URL</label>
-                <input asp-for="ProfilePictureUrl" type="url" class="form-control" placeholder="Enter profile picture URL" />
-                <span asp-validation-for="ProfilePictureUrl" class="text-danger"></span>
-            </div>
 
             <button type="submit" class="btn btn-success">
                 <i class="fas fa-save"></i> Save

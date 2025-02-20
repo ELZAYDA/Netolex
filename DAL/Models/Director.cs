@@ -12,8 +12,8 @@ namespace DAL.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Biography { get; set; }
-        public string ProfilePictureUrl { get; set; }
+        public string? Biography { get; set; }
+        public string? Image { get; set; }
 
         // Navigation property
         public ICollection<MovieDirector> MovieDirectors { get; set; }=new HashSet<MovieDirector>();

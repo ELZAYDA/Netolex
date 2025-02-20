@@ -20,6 +20,20 @@ body {
     color: #343a40;
     margin-bottom: 30px;
 }
+/* Profile Picture Styling */
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits without distortion */
+    border: 2px solid #007bff;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.profile-picture:hover {
+    transform: scale(1.1); /* Slightly enlarges the image on hover */
+    border-color: #0056b3;
+}
 
 /* Add Actor Button */
 .add-Actor-container {

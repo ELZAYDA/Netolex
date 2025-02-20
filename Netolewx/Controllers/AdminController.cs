@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using DAL.Models;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Netolewx.ViewModels;
 using Netolewx.ViewModels.MovieVM;
 using Netolewx.ViewModels.MovieVM.MovieVM;
+using System.Drawing;
 
 namespace Netolewx.Controllers
 {
@@ -25,10 +27,10 @@ namespace Netolewx.Controllers
             _dbApplicationContext=dbApplicationContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var movies = _unitOfWork.movieRepo.GetAll();
+            var movies =await _unitOfWork.movieRepo.GetAllAsync();
             if (movies == null)
                 return NotFound();
             else
@@ -36,12 +38,14 @@ namespace Netolewx.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             var model = new AddMovieVM();
 
-            // تحميل الأنواع من قاعدة البيانات
-            model.GenreList = _unitOfWork.genreRepo.GetAll().Select(g => new SelectListItem
+            // تحميل الأنواع من قاعدة البيانات بشكل غير متزامن
+            var genres = await _unitOfWork.genreRepo.GetAllAsync();
+
+            model.GenreList = genres.Select(g => new SelectListItem
             {
                 Text = g.Name,  // اسم النوع
                 Value = g.Id.ToString()  // قيمة النوع
@@ -51,7 +55,7 @@ namespace Netolewx.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddMovieVM model)
+        public async Task<IActionResult> Add(AddMovieVM model)
         {
             if (ModelState.IsValid)
             {
@@ -74,66 +78,128 @@ namespace Netolewx.Controllers
                         _dbApplicationContext.MovieGenre.Add(movieGenre);  // إضافة العلاقة بين الفيلم والنوع
                     }
 
-                    _unitOfWork.Complete(); // حفظ العلاقات في قاعدة البيانات
+                   await _unitOfWork.Complete(); // حفظ العلاقات في قاعدة البيانات
                 }
 
                 return RedirectToAction("Index");  // إعادة التوجيه إلى قائمة الأفلام
             }
-            // إعادة تحميل قائمة الأنواع عند حدوث خطأ
-            model.GenreList = _unitOfWork.genreRepo.GetAll()
-                .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
-                .ToList();
+            //// إعادة تحميل قائمة الأنواع عند حدوث خطأ
+            //model.GenreList = _unitOfWork.genreRepo.GetAllAsync()
+            //    .Select(g => new SelectListItem { Value = g.Id.ToString(), Text = g.Name })
+            //    .ToList();
+            var genres = await _unitOfWork.genreRepo.GetAllAsync();
+
+            model.GenreList = genres.Select(g => new SelectListItem
+            {
+                Text = g.Name,  // اسم النوع
+                Value = g.Id.ToString()  // قيمة النوع
+            }).ToList();
+
 
             return View(model);  // إذا كان هناك خطأ في النموذج، نعرضه مرة أخرى
         }
 
 
-        public IActionResult Details(int id, string name = "Details")
+        public async Task<IActionResult> Details(int id, string name = "Details")
         {
-            var entity = _unitOfWork.movieRepo.GetMoviesWithGenres(id);
-
-            if (entity == null) // Check if the movie exists first
+            var entity =await _unitOfWork.movieRepo.GetMoviesWithGenresAsync(id);
+            if (entity == null)
             {
-                return NotFound(); // Return 404 if movie doesn't exist
+                return NotFound();
             }
+
             var detailsMovie = _mapper.Map<Movie, DetailsEditMovieVM>(entity);
 
+            // ✅ جلب جميع الأنواع المتاحة وتحويلها إلى SelectListItem
+            //detailsMovie.GenreList = _unitOfWork.genreRepo.GetAll()
+            //    .Select(g => new SelectListItem
+            //    {
+            //        Value = g.Id.ToString(),
+            //        Text = g.Name,
+            //        Selected = entity.MovieGenres.Any(mg => mg.GenreId == g.Id) // تحديد الأنواع المختارة مسبقًا
+            //    })
+            //    .ToList();
+            var genres = await _unitOfWork.genreRepo.GetAllAsync();
+
+            detailsMovie.GenreList = genres.Select(g => new SelectListItem
+            {
+                Text = g.Name,  // اسم النوع
+                Value = g.Id.ToString(),
+                Selected = entity.MovieGenres.Any(mg => mg.GenreId == g.Id)// قيمة النوع
+            }).ToList();
 
 
             return View(name, detailsMovie);
         }
 
+
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return Details(id, "Edit");
+            return await Details(id, "Edit");
         }
 
         [HttpPost]
-        public IActionResult Edit(DetailsEditMovieVM entity)
+        public async Task<IActionResult> Edit(DetailsEditMovieVM entity)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                #region \\
+                 //// If the model is invalid, re-populate the genres list and return to the view.
+                //entity.GenreList = await _unitOfWork.genreRepo.GetAllAsync()
+                //    .Select(g => new SelectListItem
+                //    {
+                //        Value = g.Id.ToString(),
+                //        Text = g.Name,
+                //        Selected = entity.SelectedGenres != null && entity.SelectedGenres.Contains(g.Id)
+                //    })
+                //    .ToList();
+                #endregion
+               
+                var genres = await _unitOfWork.genreRepo.GetAllAsync();
 
-                if (entity == null)
+                entity.GenreList = genres.Select(g => new SelectListItem
                 {
-                    return NotFound(); // Handle movie not found
-                }
+                    Text = g.Name,  // اسم النوع
+                    Value = g.Id.ToString(),  // قيمة النوع
+                    Selected = entity.MovieGenres.Any(mg => mg.GenreId == g.Id)
+                }).ToList();
 
-
-                var movie = _mapper.Map<DetailsEditMovieVM, Movie>(entity);
-                _unitOfWork.movieRepo.Update(movie); // Save updates to DB
-                _unitOfWork.Complete();
-                return RedirectToAction("Index");
+                return View(entity);
             }
 
-            return View(entity); // Return form with validation errors
+            var movie = await _unitOfWork.movieRepo.GetMoviesWithGenresAsync(entity.Id);
+            if (movie == null)
+            {
+                return NotFound(); // Movie not found
+            }
+
+            // Update the main movie details
+
+            // If the user has selected genres, update MovieGenres
+            if (entity.SelectedGenres != null && entity.SelectedGenres.Any())
+            {
+                // First, remove the old genres associated with the movie
+                _dbApplicationContext.MovieGenre.RemoveRange(movie.MovieGenres);
+
+                // Then, add the new selected genres to the collection
+                foreach (var genreId in entity.SelectedGenres)
+                {
+                    movie.MovieGenres.Add(new MovieGenre { MovieId = movie.Id, GenreId = genreId });
+                }
+            }
+
+            // Save changes to the database
+            _unitOfWork.movieRepo.Update(movie);
+           await _unitOfWork.Complete();
+            return RedirectToAction("Index"); // Redirect to the index page after the update
         }
 
+
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var movie = _unitOfWork.movieRepo.Get(id); // Fetch movie first
+            var movie = await _unitOfWork.movieRepo.GetAsync(id); // Fetch movie first
 
             if (movie == null)
             {
@@ -141,7 +207,7 @@ namespace Netolewx.Controllers
             }
 
             _unitOfWork.movieRepo.Delete(movie); // Delete only if found
-            _unitOfWork.Complete();
+          await  _unitOfWork.Complete();
 
             return RedirectToAction("Index");
         }
