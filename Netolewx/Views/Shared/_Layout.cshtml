@@ -33,7 +33,12 @@
                         <li><a href="/Review/index/">Review Management</a></li>
                     </ul>
                 </li>
-                <li><a asp-controller="account" asp-action="SignUp"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a asp-controller="home" asp-action="WatchList" class="@(ViewContext.RouteData.Values["Action"].ToString() == "WatchList" ? "active" : "")">WatchList</a></li>
+                    <li>
+                <a asp-controller="account" asp-action="SignOut" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

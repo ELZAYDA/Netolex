@@ -1,4 +1,4 @@
-using BLL.Repositiries.Implementation;
+﻿using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using DAL.Models;
@@ -36,6 +36,18 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<DbApplicationContext>()  // ?? ?? ???????
 .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/SignIn";       // تحديد مسار صفحة تسجيل الدخول
+
+    options.ExpireTimeSpan = TimeSpan.FromDays(1); // مدة صلاحية الكوكي قبل انتهاء الجلسة
+    options.SlidingExpiration = true;  // إعادة ضبط الوقت عند كل طلب جديد
+
+    options.Cookie.HttpOnly = true;    // منع JavaScript من الوصول إلى الكوكي (زيادة الأمان)
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // إجبار استخدام HTTPS فقط
+    options.Cookie.SameSite = SameSiteMode.Strict; // منع إرسال الكوكي إلا لنفس الموقع
+});
+
 
 var app = builder.Build();
 
@@ -51,8 +63,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();//FILES IN www.root
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.MapControllerRoute(

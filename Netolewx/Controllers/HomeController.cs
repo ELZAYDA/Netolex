@@ -2,6 +2,7 @@
 using BLL.Repositiries.Interfaces;
 using DAL.Contexts;
 using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Netolewx.Models;
 using Netolex.ViewModels.MovieVM;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Netolewx.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -50,6 +52,11 @@ namespace Netolewx.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult WatchList()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
