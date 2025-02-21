@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "watchlistMovies";
+    Layout ="_Layout" ;
+}
+
+@model List<Movie>
+@{
+    ViewData["Title"] = "My Watchlist";
+}
+<link rel="stylesheet" href="~/css/watchList/watchlistMovies1.css" />
+<div class="watchlist-container">
+    <div class="watchlist-header">
+        <h1 class="watchlist-title">My Watchlist</h1>
+        <p class="watchlist-count">@Model.Count movies saved</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-watchlist">
+            <div class="empty-icon">
+                <i class="fas fa-film"></i>
+            </div>
+            <h3>Your watchlist is empty</h3>
+            <p>Movies you add to your watchlist will appear here.</p>
+            <a asp-controller="Home" asp-action="Index" class="btn-browse">Browse Movies</a>
+        </div>
+    }
+    else
+    {
+        <div class="movie-grid">
+            @foreach (var movie in Model)
+            {
+                <div class="movie-card" data-movie-id="@movie.Id">
+                    <div class="movie-poster">
+                        <img src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "/images/default-poster.jpg" : movie.PosterUrl)" alt="@movie.Title">
+                        <div class="movie-actions">
+                            <form asp-controller="WatchList" asp-action="RemoveFromWatchlist" method="post">
+                                <input type="hidden" name="movieId" value="@movie.Id" />
+                                <button type="submit" class="btn-remove-watchlist">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+
+                            <a asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id" class="btn-details">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">@movie.Title</h3>
+                        <p class="movie-year">@movie.ReleaseYear</p>
+                        @foreach(var genre in movie.MovieGenres)
+                        @if (genre.Genre != null)
+                        {
+                            <span class="movie-genre">@genre.Genre.Name</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+

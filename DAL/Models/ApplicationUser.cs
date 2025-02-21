@@ -24,7 +24,7 @@ namespace DAL.Models
         [RegularExpression(@"true", ErrorMessage = "You must agree to the terms and conditions")]
         public string AgreeToTerms { get; set; }
 
-        //public virtual ICollection<WatchList> WatchlistItems { get; set; }=new HashSet<WatchList>();
+        public ICollection<WatchList> WatchlistItems { get; set; }=new HashSet<WatchList>();
 
     }
 }

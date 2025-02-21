@@ -1,124 +1,119 @@
-﻿/* Dark Theme for Netolex */
+﻿/* CSS متجاوب لموقع Netolex */
+
+/* القواعد العامة */
 :root {
-    --bg-primary: #121212;
-    --bg-secondary: #1e1e1e;
-    --bg-tertiary: #2d2d2d;
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --accent-color: #e50914;
-    --accent-hover: #f40612;
-    --border-color: #333333;
-    --card-bg: #1e1e1e;
-    --shadow-color: rgba(0, 0, 0, 0.5);
+    --primary-color: #e50914;
+    --secondary-color: #141414;
+    --text-color: #ffffff;
+    --accent-color: #e6e6e6;
+    --hover-color: #ff3d47;
+    --darker-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-primary);
-    background-color: wheat;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: var(--text-color);
 }
-    body .dark-theme {
-        background-color: wheat;
-    }
-/* Navigation Bar */
+
+/* تنسيق شريط التنقل */
 .nav-bar {
-    box-shadow: 0 2px 10px var(--shadow-color);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8rem 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 15px 20px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--accent-color);
-    gap: 0.5rem;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+    .logo i {
+        font-size: 1.6rem;
+    }
 
 .nav-link {
     display: flex;
+    align-items: center;
     list-style: none;
-    gap: 1.5rem;
     margin: 0;
     padding: 0;
+    gap: 25px;
 }
 
-    .nav-link a {
-        color: var(--text-secondary);
+    .nav-link li a {
+        color: var(--text-color);
         text-decoration: none;
+        font-size: 1rem;
         font-weight: 500;
-        transition: color 0.3s ease;
-        padding: 0.5rem 0;
-        position: relative;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
 
-        .nav-link a:hover,
-        .nav-link a.active {
-            color: var(--text-primary);
+        .nav-link li a:hover,
+        .nav-link li a.active {
+            color: var(--primary-color);
         }
 
-            .nav-link a.active::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background-color: var(--accent-color);
-            }
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
 
-/* General Dropdown Styles */
+/* تنسيق القائمة المنسدلة */
 .dropdown {
     position: relative;
-    display: inline-block;
 }
 
-.dropdown-toggle {
-    display: block;
-    padding: 10px 15px;
-    color: #ffffff;
-    text-decoration: none;
-    background-color: #333;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+.dropdown-toggle i {
+    font-size: 0.8rem;
+    margin-left: 5px;
+    transition: transform 0.3s;
 }
 
-    .dropdown-toggle:hover {
-        background-color: #444; /* Slightly lighter on hover */
-    }
+.dropdown:hover .dropdown-toggle i {
+    transform: rotate(180deg);
+}
 
-/* Dropdown Menu Styles */
 .dropdown-nav-link {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #222; /* Dark background */
-    border-radius: 5px;
-    width: 200px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    min-width: 200px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    list-style: none;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    list-style: none;
-    padding: 0;
-    z-index: 1000;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    z-index: 100;
 }
 
 .dropdown:hover .dropdown-nav-link {
@@ -127,141 +122,205 @@ body {
     transform: translateY(0);
 }
 
-/* Dropdown Links */
-.dropdown-nav-link li {
-    border-bottom: 1px solid #444; /* Divider between links */
-}
-
-    .dropdown-nav-link li:last-child {
-        border-bottom: none;
-    }
-
-.dropdown-nav-link a {
+.dropdown-nav-link li a {
+    padding: 10px 15px;
     display: block;
-    padding: 12px 15px;
-    color: #ddd;
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 0.9rem;
 }
 
-    .dropdown-nav-link a:hover {
-        background-color: #444;
-        color: #ffffff;
+    .dropdown-nav-link li a:hover {
+        background-color: rgba(229, 9, 20, 0.1);
     }
 
-/* Add Arrow Animation */
-.dropdown-toggle i {
+/* تنسيق شارة Watchlist */
+.watchlist-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    font-size: 11px;
+    padding: 0 4px;
     margin-left: 5px;
-    transition: transform 0.3s ease;
 }
 
-.dropdown:hover .dropdown-toggle i {
-    transform: rotate(180deg);
-}
-
+/* تنسيق زر تسجيل الخروج */
 .logout-btn {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    background-color: #dc3545; /* Red color for logout */
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out;
+    gap: 5px;
+    color: var(--text-color);
 }
-
-    .logout-btn i {
-        margin-right: 8px;
-        font-size: 18px;
-    }
 
     .logout-btn:hover {
-        background-color: #c82333; /* Darker red on hover */
+        color: var(--primary-color);
     }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .dropdown {
-        display: block;
-        text-align: center;
-    }
-
-    .dropdown-nav-link {
-        width: 100%;
-        position: static;
-        transform: none;
-        opacity: 1;
-        visibility: visible;
-        box-shadow: none;
-    }
-}
-
-
-/* Mobile Menu Button */
-.mobile-menu-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    font-size: 1.4rem;
-    cursor: pointer;
-}
-
-/* Main Content */
+/* تنسيق المحتوى الرئيسي */
 main {
-    background-color: black;
-    flex: 1;
-    padding: 2rem;
+    min-height: calc(100vh - 150px);
     max-width: 1400px;
     margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 20px;
 }
 
-/* Footer */
+/* تنسيق التذييل (Footer) */
 .main-footer {
-    padding: 2rem 0;
-    margin-top: auto;
+    background-color: var(--darker-bg);
+    padding: 30px 0;
+    margin-top: 50px;
 }
 
 .footer-content {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 20px;
 }
 
 .footer-links ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    justify-content: center;
+    gap: 20px;
     list-style: none;
     padding: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 25px;
 }
 
 .footer-links a {
-    color: var(--text-secondary);
+    color: var(--accent-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
     .footer-links a:hover {
-        color: var(--text-primary);
+        color: var(--primary-color);
     }
 
 .copyright {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
     text-align: center;
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.5rem;
+    color: #999;
+    font-size: 0.85rem;
 }
 
-/* Responsive Design */
+/* تنسيق إشعار Watchlist */
+.movie-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 300px;
+    background-color: rgba(26, 26, 26, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 9999;
+    animation: notification-lifecycle 5s forwards;
+    border-left: 4px solid var(--primary-color);
+    backdrop-filter: blur(8px);
+}
+
+@keyframes notification-lifecycle {
+    0% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+.movie-notification-content {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.movie-poster {
+    width: 35px;
+    height: 50px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 12px;
+}
+
+    .movie-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.movie-notification-text {
+    flex-grow: 1;
+}
+
+.notification-title {
+    color: #ccc;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.movie-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.notification-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+}
+
+.success-icon {
+    color: white;
+    font-size: 14px;
+}
+
+/* ===================== تصميم متجاوب ===================== */
+
+/* للشاشات المتوسطة (أقل من 992px) */
+@media (max-width: 992px) {
+    .nav-link {
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 1.6rem;
+    }
+
+    .nav-link li a {
+        font-size: 0.95rem;
+    }
+}
+
+/* للأجهزة اللوحية (أقل من 768px) */
 @media (max-width: 768px) {
     .nav-content {
-        padding: 0.8rem 1rem;
+        padding: 10px 15px;
     }
 
     .mobile-menu-btn {
@@ -273,148 +332,118 @@ main {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--bg-tertiary);
+        background-color: var(--secondary-color);
         flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
-        display: none;
-        box-shadow: 0 4px 12px var(--shadow-color);
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
     }
 
-        .nav-link.show {
-            display: flex;
+        .nav-link.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
+
+        .nav-link li {
+            width: 100%;
+        }
+
+            .nav-link li a {
+                padding: 8px 0;
+                display: block;
+                width: 100%;
+            }
 
     .dropdown-nav-link {
         position: static;
         box-shadow: none;
-        padding-left: 1rem;
-        border-left: 2px solid var(--accent-color);
-        margin-top: 0.5rem;
+        background-color: transparent;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding-left: 15px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .dropdown.active .dropdown-nav-link {
+        max-height: 500px;
+    }
+
+    .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
     }
 
     .footer-links ul {
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .movie-notification {
+        width: calc(100% - 40px);
+        max-width: 400px;
     }
 }
 
-/* Additional Elements - Cards */
-.card {
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px var(--shadow-color);
+/* للهواتف المحمولة (أقل من 576px) */
+@media (max-width: 576px) {
+    .logo {
+        font-size: 1.4rem;
     }
 
-.card-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
+        .logo i {
+            font-size: 1.2rem;
+        }
 
-.card-content {
-    padding: 1.2rem;
-}
-
-.card-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.card-info {
-    display: flex;
-    justify-content: space-between;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-    .rating i {
-        color: #ffc107;
+    main {
+        padding: 15px;
     }
 
-/* Button Styles */
-.btn {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-    .btn-primary:hover {
-        background-color: var(--accent-hover);
+    .nav-content {
+        padding: 10px;
     }
 
-.btn-outline {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-}
-
-    .btn-outline:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: var(--text-primary);
+    .movie-notification {
+        width: calc(100% - 20px);
+        right: 10px;
+        left: 10px;
+        max-width: none;
     }
 
-/* Form Elements */
-input, select, textarea {
-    background-color: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 0.8rem 1rem;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    width: 100%;
-    box-sizing: border-box;
+    .copyright {
+        font-size: 0.75rem;
+    }
 }
 
-    input:focus, select:focus, textarea:focus {
-        outline: none;
-        border-color: var(--accent-color);
+/* للشاشات الصغيرة جداً */
+@media (max-width: 370px) {
+    .logo {
+        font-size: 1.2rem;
     }
 
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--text-secondary);
+    .movie-poster {
+        width: 30px;
+        height: 45px;
+    }
+
+    .notification-title {
+        font-size: 10px;
+    }
+
+    .movie-title {
+        font-size: 12px;
+    }
 }
 
-/* Movie Grid */
-.movie-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-/* Add JavaScript for mobile menu */
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-  const navLinks = document.querySelector('.nav-link');
-  
-  mobileMenuBtn.addEventListener('click', function() {
-    navLinks.classList.toggle('show');
-  });
-});
+/* JavaScript اللازم لتشغيل القائمة على الأجهزة المحمولة */

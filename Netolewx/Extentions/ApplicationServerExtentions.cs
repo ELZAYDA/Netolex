@@ -14,7 +14,7 @@ namespace Netolex.Extentions
             //services.AddScoped<IDirectorRepo, DirectorRepo>();
             //services.AddScoped<IActorRepo, ActorRepo>();
             //services.AddScoped<IMovieGenreRepo, MovieGenreRepo>();
-            //services.AddScoped<IReviewRepo, ReviewRepo>();
+            services.AddScoped<IWatchListRepo, WatchListRepo>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IEmailSender, EmailSender>();
             return services;
