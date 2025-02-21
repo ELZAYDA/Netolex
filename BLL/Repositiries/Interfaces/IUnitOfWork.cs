@@ -12,8 +12,8 @@ namespace BLL.Repositiries.Interfaces
         IGenreRepo genreRepo { get; set; }
         IActorRepo actorRepo { get; set; }
         IDirectorRepo directorRepo { get; set; }
-        IWatchListRepo watchListRepo { get; set; }
-        IReviewRepo reviewRepo { get; set; }
+        //IWatchListRepo watchListRepo { get; set; }
+        //IReviewRepo reviewRepo { get; set; }
         //IMovieGenreRepo movieGenreRepo { get; set; }
         public Task<int> Complete();
     }

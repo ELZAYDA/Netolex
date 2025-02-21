@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Check Your Inbox";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/Account/CheckURInbox.css" />
+<div class="check-inbox-container">
+    <div class="check-inbox-card">
+        <div class="card-header">
+            <div class="envelope-icon">
+                <i class="email-symbol">✉</i>
+            </div>
+            <h2 class="card-title">Check Your Inbox</h2>
+            <p class="card-subtitle">We've sent a password reset link to your email address.</p>
+        </div>
+
+        <div class="instructions">
+            <ol class="steps-list">
+                <li>Check your email inbox (and spam folder)</li>
+                <li>Click the reset link in the email</li>
+                <li>Create your new password</li>
+            </ol>
+        </div>
+
+        <div class="action-area">
+            <p class="expiry-note">The reset link will expire in 30 minutes.</p>
+
+            <div class="buttons">
+                <a href="@Url.Action("SignIn", "Account")" class="btn btn-secondary">Back to Login</a>
+                <a href="@Url.Action("ForgotPassword", "Account")" class="btn btn-primary">Resend Email</a>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="help-text">
+                Didn't receive the email? Check your spam folder or <a href="@Url.Action("Contact", "Home")" class="link">contact support</a>.
+            </p>
+        </div>
+    </div>
+</div>

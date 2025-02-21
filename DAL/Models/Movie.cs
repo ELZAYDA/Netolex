@@ -23,8 +23,6 @@ namespace DAL.Models
         public ICollection<MovieGenre> MovieGenres { get; set; }=new HashSet<MovieGenre>();
         public ICollection<MovieActor> MovieActors { get; set; } =new HashSet<MovieActor>();
         public ICollection<MovieDirector> MovieDirectors { get; set; }= new HashSet<MovieDirector>();
-        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
-        public ICollection<WatchList> WatchLists { get; set; }=new HashSet<WatchList>();
     }
 }
 // Enum for WatchList Status

@@ -17,11 +17,7 @@ namespace DAL.Configrations
             builder.HasIndex(m => m.Title); // إضافة فهرس لتحسين الأداء
             builder.Property(m => m.Title).IsRequired().HasMaxLength(255);
 
-        // علاقات One-to-Many
-        builder.HasMany(m => m.Reviews)
-                   .WithOne(r => r.Movie)
-                   .HasForeignKey(r => r.MovieId)
-                   .OnDelete(DeleteBehavior.Cascade);
+     
         }
     }
 }

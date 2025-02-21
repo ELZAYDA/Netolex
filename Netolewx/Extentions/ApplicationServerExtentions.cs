@@ -1,6 +1,7 @@
 ﻿using BLL.Repositiries.Implementation;
 using BLL.Repositiries.Interfaces;
 using BLL.Repositories.Implementation;
+using RouteCourse.Services.EmailSender;
 
 namespace Netolex.Extentions
 {
@@ -15,7 +16,7 @@ namespace Netolex.Extentions
             //services.AddScoped<IMovieGenreRepo, MovieGenreRepo>();
             //services.AddScoped<IReviewRepo, ReviewRepo>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddTransient<IEmailSender, EmailSender>();
             return services;
         }
     }
