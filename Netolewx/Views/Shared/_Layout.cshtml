@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var user = await UserManager.GetUserAsync(User);
+    var watchlistCount = 0;
+
+    if (user != null)
+    {
+        watchlistCount = await WatchlistService.GetWatchlistCountAsync(user.Id);
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +20,7 @@
     <link rel="stylesheet" href="~/css/layout.css">
 
 </head>
+
 <body style="    background-color: black;">
     <nav class="nav-bar">
         <div class="nav-content">
@@ -33,8 +43,17 @@
                         <li><a href="/Review/index/">Review Management</a></li>
                     </ul>
                 </li>
-                <li><a asp-controller="home" asp-action="WatchList" class="@(ViewContext.RouteData.Values["Action"].ToString() == "WatchList" ? "active" : "")">WatchList</a></li>
-                    <li>
+                <!-- Then use it in your navigation -->
+                <li>
+                    <a asp-controller="WatchList" asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["Action"].ToString() == "WatchList" ? "active" : "")">
+                        WatchList @if (watchlistCount > 0)
+                        {
+                            <span class="watchlist-badge">@watchlistCount</span>
+                        }
+                    </a>
+                </li>
+                <li>
                 <a asp-controller="account" asp-action="SignOut" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
@@ -56,7 +75,8 @@
                     <li><a href="/privacy">Privacy Policy</a></li>
                     <li><a href="/terms">Terms of Service</a></li>
                 </ul>
-            </div>
+            </div> 
+            @RenderSection("Scripts", required: false)
             <div class="copyright">
                 <p>&copy; @DateTime.Now.Year MovieVerse. All rights reserved.</p>
             </div>
@@ -66,6 +86,48 @@
 
 </body>
 </html>
-<style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // تفعيل زر القائمة في الأجهزة المحمولة
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-link');
 
-</style>
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', function () {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // تفعيل القوائم المنسدلة في الأجهزة المحمولة
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dropdown => {
+            const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+
+            if (dropdownToggle && window.innerWidth < 768) {
+                dropdownToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                });
+            }
+        });
+
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.nav-content') && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // إعادة تعيين حالة القائمة عند تغيير حجم النافذة
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    });
+</script>

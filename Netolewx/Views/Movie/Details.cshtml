@@ -11,6 +11,8 @@
 
 </head>
 <body>
+
+
     <div class="container">
         <div class="movie-details">
             <div class="movie-image">
@@ -38,9 +40,13 @@
                     <a href="@Model.TrailerUrl" target="_blank" class="trailer-btn">
                         <i class="fas fa-play"></i> Watch Trailer
                     </a>
-                    <button class="watchlist-btn" onclick="addToWatchlist(@Model.Id)">
-                        <i class="fas fa-plus"></i> Add to Watchlist
-                    </button>
+                    <form action="/WatchList/AddToWatchlist" method="post">
+                        <input type="hidden" name="movieId" value="@Model.Id" />
+                        <button type="submit" class="watchlist-btn">
+                            <i class="fas fa-plus"></i> Add to Watchlist
+                        </button>
+                    </form>
+
                     <a href="/home/Index" class="back-btn">
                         <i class="fas fa-arrow-left"></i> Back to Movies
                     </a>

@@ -1,0 +1,207 @@
+﻿/* Watchlist Page Styles - Dark Theme with Red, Black, White */
+:root {
+    --bg-color: #000000;
+    --card-bg: #1a1a1a;
+    --text-color: #ffffff;
+    --accent-color: #ff0000;
+    --border-color: #333333;
+    --hover-bg: #2a2a2a;
+}
+
+.watchlist-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.watchlist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.watchlist-title {
+    font-size: 28px;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.watchlist-count {
+    color: #999999;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Empty watchlist state */
+.empty-watchlist {
+    text-align: center;
+    padding: 60px 0;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    font-size: 60px;
+    color: #444444;
+    margin-bottom: 20px;
+}
+
+.empty-watchlist h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.empty-watchlist p {
+    color: #999999;
+    margin-bottom: 25px;
+}
+
+.btn-browse {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+    .btn-browse:hover {
+        background-color: #cc0000;
+    }
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.movie-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .movie-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+.movie-poster {
+    width: 100%;
+    height: 82%;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 2/3;
+}
+
+    .movie-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+.movie-card:hover .movie-poster img {
+    transform: scale(1.05);
+}
+
+.movie-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.movie-card:hover .movie-actions {
+    opacity: 1;
+}
+
+.btn-remove-watchlist, .btn-details {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-remove-watchlist {
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+    .btn-remove-watchlist:hover {
+        background-color: #ff0000;
+    }
+
+.btn-details {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+    .btn-details:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+.movie-info {
+    padding: 15px;
+}
+
+.movie-title {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+}
+
+.movie-year {
+    color: #999999;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.movie-genre {
+    display: inline-block;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--accent-color);
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .watchlist-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .watchlist-count {
+        margin-top: 5px;
+    }
+}
