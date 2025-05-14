@@ -181,13 +181,13 @@ dotnet run
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage](/api/placeholder/800/450)
+![Homepage](msedge_QVYofxUylY.png)
 
 ### Movie Details
-![Movie Details](/api/placeholder/800/450)
+![Movie Details](msedge_Ys6ANiYUAc.png)
 
 ### Watchlist Management
-![Watchlist](/api/placeholder/800/450)
+![Watchlist](msedge_P3sFoa1jt0.png)
 
 ## 🤝 Contributing
 
